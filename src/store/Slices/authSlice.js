@@ -23,6 +23,11 @@ export const loginUser = createAsyncThunk("loginUser", async (details) => {
   return response.data.data;
 });
 
+export const getCurrentUser = createAsyncThunk("getCurrentUser", async () => {
+  const response = await axiosInstance.get("/users/current-user");
+
+  return response.data.data;
+});
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -35,9 +40,12 @@ const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         state.userDetails = action.payload;
         state.loading = false;
+        state.status = true;
       })
       .addCase(registerUser.rejected, (state) => {
         state.loading = false;
+        state.userDetails = null;
+        state.status = false;
       });
 
     builder
@@ -48,12 +56,25 @@ const authSlice = createSlice({
         state.userDetails = action.payload;
         state.loading = false;
         state.status = true;
+      })
+      .addCase(loginUser.rejected, (state) => {
+        state.loading = false;
+        state.userDetails = null;
+        state.status = false;
       });
 
-    builder.addCase(loginUser.rejected, (state) => {
+    builder.addCase(getCurrentUser.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getCurrentUser.fulfilled, (state, action) => {
       state.loading = false;
-      state.userDetails = null;
+      state.status = true;
+      state.userDetails = action.payload;
+    });
+    builder.addCase(getCurrentUser.rejected, (state) => {
+      state.loading = false;
       state.status = false;
+      state.userDetails = null;
     });
   },
 });

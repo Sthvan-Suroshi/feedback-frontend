@@ -10,12 +10,10 @@ function Signin() {
   const dispatch = useDispatch();
 
   const login = async (details) => {
-    console.log(details);
     const res = await dispatch(loginUser(details));
-    console.log(res);
-  
+
     if ((res.type = "loginUser/fulfilled")) {
-      navigate("/home");
+      navigate("/");
     }
   };
   return (

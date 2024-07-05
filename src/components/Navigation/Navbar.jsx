@@ -15,7 +15,7 @@ function Navbar() {
 
       <div className="basis-24 flex justify-end">
         {user ? (
-          <div className="font-bold ">
+          <div className="font-bold py-2">
             <p>{user.fullName}</p>
           </div>
         ) : (
