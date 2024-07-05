@@ -8,7 +8,7 @@ function Layout() {
     <>
       <Navbar />
       <div className="sm:flex flex-none">
-        <div className="text-white ">
+        <div className="text-white">
           <Sidebar />
         </div>
         <Outlet />

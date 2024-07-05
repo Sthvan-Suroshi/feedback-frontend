@@ -27,7 +27,19 @@ const Sidebar = () => {
           }
         >
           <BiDetail />
-          Upload Feedback
+          Upload Image
+        </NavLink>
+
+        <NavLink
+          to="/view"
+          className={({ isActive }) =>
+            isActive
+              ? "flex items-center gap-5 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] bg-slate-400 hover:bg-[#27374d] hover:text-[#dde6ed]"
+              : "flex items-center gap-5 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] hover:bg-[#27374d] hover:text-[#dde6ed]"
+          }
+        >
+          <BiDetail />
+          View Image Feedback
         </NavLink>
       </div>
     </div>

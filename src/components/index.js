@@ -4,4 +4,14 @@ import Signup from "./Signup/Signup";
 import Signin from "./Signin/Signin";
 import Navbar from "./Navigation/Navbar";
 import LoginPopup from "./LoginPopup";
-export { Home, ImageFeedback, Signup, Signin, Navbar, LoginPopup };
+import ImageResponseView from "./ImageResponseView";
+
+export {
+  Home,
+  ImageFeedback,
+  Signup,
+  Signin,
+  Navbar,
+  LoginPopup,
+  ImageResponseView,
+};

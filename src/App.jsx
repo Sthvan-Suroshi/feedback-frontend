@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./components/Home";
-import { ImageFeedback, Signup, Signin } from "./components";
+import { ImageFeedback, Signup, Signin, ImageResponseView } from "./components";
 import Auth from "./components/Auth";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "./store/Slices/authSlice";
@@ -14,7 +14,7 @@ function App() {
     dispatch(getCurrentUser());
   }, [dispatch]);
   return (
-    <div>
+    <div className="">
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
@@ -35,6 +35,8 @@ function App() {
               </Auth>
             }
           />
+
+          <Route path="/view" element={<ImageResponseView />} />
         </Route>
       </Routes>
     </div>

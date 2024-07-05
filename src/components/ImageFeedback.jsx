@@ -14,10 +14,10 @@ function ImageFeedback() {
   };
   return (
     <form
-      className="w-full mt-10 overflow-y-auto"
+      className="w-full mt-10 overflow-y-auto h-screen"
       onSubmit={handleSubmit(test)}
     >
-      <div className="w-3/4 h-1/2 mx-auto border-slate-900 border-4 rounded-md">
+      <div className="w-3/4 h-1/2 mx-auto border-slate-900 border-2 rounded-md">
         <GetImagePreview
           name="image"
           control={control}
