@@ -6,6 +6,7 @@ import Navbar from "./Navigation/Navbar";
 import LoginPopup from "./LoginPopup";
 import ImageResponseView from "./ImageResponseView";
 import Loader from "./Loader";
+import EditImageFeedback from "./EditImageFeedback";
 export {
   Home,
   ImageFeedback,
@@ -15,4 +16,5 @@ export {
   LoginPopup,
   ImageResponseView,
   Loader,
+  EditImageFeedback,
 };

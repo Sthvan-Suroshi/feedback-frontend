@@ -57,6 +57,14 @@ export const deleteImageFeedback = createAsyncThunk(
   }
 );
 
+export const getImageFeedback = createAsyncThunk(
+  "getImageFeedback",
+  async (id) => {
+    const response = await axiosInstance.get(`/imageFeedbacks/${id}`);
+    return response.data.data;
+  }
+);
+
 export const getAllUserImageResponses = createAsyncThunk(
   "getAllUserImageResponses",
   async () => {
@@ -91,7 +99,7 @@ const imageFeedbackSlice = createSlice({
       })
       .addCase(editImageFeedback.fulfilled, (state, action) => {
         state.loading = false;
-        state.feedbacks = action.payload;
+        // state.feedbacks = action.payload;
       })
       .addCase(editImageFeedback.rejected, (state) => {
         state.loading = false;
@@ -106,6 +114,15 @@ const imageFeedbackSlice = createSlice({
           (feedback) => feedback._id !== action.payload
         );
         state.loading = false;
+      });
+
+    builder
+      .addCase(getImageFeedback.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getImageFeedback.fulfilled, (state, action) => {
+        state.loading = false;
+        state.feedbacks = action.payload;
       });
 
     builder.addCase(getAllUserImageResponses.fulfilled, (state, action) => {

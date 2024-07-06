@@ -2,7 +2,13 @@ import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./components/Home";
-import { ImageFeedback, Signup, Signin, ImageResponseView } from "./components";
+import {
+  ImageFeedback,
+  Signup,
+  Signin,
+  ImageResponseView,
+  EditImageFeedback,
+} from "./components";
 import Auth from "./components/Auth";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "./store/Slices/authSlice";
@@ -37,7 +43,7 @@ function App() {
             }
           />
 
-          <Route path="/view" element={<ImageResponseView />} />
+          <Route path="/view-responses" element={<ImageResponseView />} />
         </Route>
       </Routes>
       <Toaster position="top-center" reverseOrder={false} />

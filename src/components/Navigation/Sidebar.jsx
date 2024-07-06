@@ -1,6 +1,8 @@
 import React from "react";
-import { BiDetail } from "react-icons/bi";
 import { NavLink } from "react-router-dom";
+import { GoUpload } from "react-icons/go";
+import { MdGridView } from "react-icons/md";
+import { IoHomeOutline } from "react-icons/io5";
 
 const Sidebar = () => {
   return (
@@ -10,11 +12,11 @@ const Sidebar = () => {
           to="/"
           className={({ isActive }) =>
             isActive
-              ? "flex items-center gap-5 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] bg-slate-400 hover:bg-[#27374d] hover:text-[#dde6ed]"
-              : "flex items-center gap-5 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] hover:bg-[#27374d] hover:text-[#dde6ed]"
+              ? "flex items-center gap-2 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] bg-slate-400 hover:bg-[#27374d] hover:text-[#dde6ed]"
+              : "flex items-center gap-2 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] hover:bg-[#27374d] hover:text-[#dde6ed]"
           }
         >
-          <BiDetail />
+          <IoHomeOutline />
           Home
         </NavLink>
 
@@ -22,24 +24,24 @@ const Sidebar = () => {
           to="/upload-feedback"
           className={({ isActive }) =>
             isActive
-              ? "flex items-center gap-5 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] bg-slate-400 hover:bg-[#27374d] hover:text-[#dde6ed]"
-              : "flex items-center gap-5 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] hover:bg-[#27374d] hover:text-[#dde6ed]"
+              ? "flex items-center gap-2 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] bg-slate-400 hover:bg-[#27374d] hover:text-[#dde6ed]"
+              : "flex items-center gap-2 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] hover:bg-[#27374d] hover:text-[#dde6ed]"
           }
         >
-          <BiDetail />
+          <GoUpload />
           Upload Image
         </NavLink>
 
         <NavLink
-          to="/view"
+          to="/view-responses"
           className={({ isActive }) =>
             isActive
-              ? "flex items-center gap-5 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] bg-slate-400 hover:bg-[#27374d] hover:text-[#dde6ed]"
-              : "flex items-center gap-5 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] hover:bg-[#27374d] hover:text-[#dde6ed]"
+              ? "flex items-center gap-2 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] bg-slate-400 hover:bg-[#27374d] hover:text-[#dde6ed]"
+              : "flex items-center gap-2 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] hover:bg-[#27374d] hover:text-[#dde6ed]"
           }
         >
-          <BiDetail />
-          View Image Feedback
+          <MdGridView />
+          View All Feedbacks
         </NavLink>
       </div>
     </div>
