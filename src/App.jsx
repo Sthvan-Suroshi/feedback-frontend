@@ -6,6 +6,7 @@ import { ImageFeedback, Signup, Signin, ImageResponseView } from "./components";
 import Auth from "./components/Auth";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "./store/Slices/authSlice";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ function App() {
           <Route path="/view" element={<ImageResponseView />} />
         </Route>
       </Routes>
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 }

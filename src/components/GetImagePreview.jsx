@@ -43,6 +43,7 @@ function GetImagePreview({
             render={({ field: { onChange } }) => (
               <input
                 id={name}
+                name="image"
                 type="file"
                 accept="image/*"
                 className="hidden"

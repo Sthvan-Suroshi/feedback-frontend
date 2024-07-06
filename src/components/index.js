@@ -5,7 +5,7 @@ import Signin from "./Signin/Signin";
 import Navbar from "./Navigation/Navbar";
 import LoginPopup from "./LoginPopup";
 import ImageResponseView from "./ImageResponseView";
-
+import Loader from "./Loader";
 export {
   Home,
   ImageFeedback,
@@ -14,4 +14,5 @@ export {
   Navbar,
   LoginPopup,
   ImageResponseView,
+  Loader,
 };

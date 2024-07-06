@@ -16,7 +16,6 @@ export const addImageFeedback = createAsyncThunk(
       form.append("image", details.image[0]);
 
       const response = await axiosInstance.post("/imageFeedbacks/upload", form);
-      console.log(response);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -52,14 +51,15 @@ export const editImageFeedback = createAsyncThunk(
 export const deleteImageFeedback = createAsyncThunk(
   "deleteImageFeedback",
   async (id) => {
-    const response = await axiosInstance.delete(`/imageFeedbacks/delete/${id}`);
-    return response.data;
+    await axiosInstance.delete(`/imageFeedbacks/delete/${id}`);
+
+    return id;
   }
 );
 
 export const getAllUserImageResponses = createAsyncThunk(
   "getAllUserImageResponses",
-  async (id) => {
+  async () => {
     const response = await axiosInstance.get(
       `/imageFeedbacks/user/image-responses`
     );
@@ -75,16 +75,14 @@ const imageFeedbackSlice = createSlice({
     builder
       .addCase(addImageFeedback.pending, (state) => {
         state.loading = true;
-        state.status = false;
       })
       .addCase(addImageFeedback.fulfilled, (state, action) => {
         state.loading = false;
-        state.status = true;
+
         state.feedbacks = action.payload;
       })
       .addCase(addImageFeedback.rejected, (state) => {
         state.loading = false;
-        state.status = false;
       });
 
     builder
@@ -103,7 +101,10 @@ const imageFeedbackSlice = createSlice({
       .addCase(deleteImageFeedback.pending, (state) => {
         state.loading = true;
       })
-      .addCase(deleteImageFeedback.fulfilled, (state) => {
+      .addCase(deleteImageFeedback.fulfilled, (state, action) => {
+        state.feedbacks = state.feedbacks.filter(
+          (feedback) => feedback._id !== action.payload
+        );
         state.loading = false;
       });
 
@@ -114,4 +115,6 @@ const imageFeedbackSlice = createSlice({
   },
 });
 
-export default imageFeedbackSlice.reducer;
+export const { actions, reducer } = imageFeedbackSlice;
+
+export default reducer;
