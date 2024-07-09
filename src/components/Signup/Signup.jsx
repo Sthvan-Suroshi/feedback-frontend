@@ -15,10 +15,13 @@ function Signup() {
   const navigate = useNavigate();
 
   const submit = async (details) => {
-    console.log(details);
-
     const res = await dispatch(registerUser(details));
     console.log(res);
+
+    if ((res.type = "registerUser/fulfilled")) {
+      toast.success("Registered successfully");
+      navigate("/");
+    }
   };
 
   return (

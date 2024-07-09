@@ -7,12 +7,13 @@ import {
   Signup,
   Signin,
   ImageResponseView,
-  EditImageFeedback,
+  AdminPanel,
 } from "./components";
 import Auth from "./components/Auth";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "./store/Slices/authSlice";
 import { Toaster } from "react-hot-toast";
+import FeedbackFormBuilder from "./components/customque";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ function App() {
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
+
         <Route path="/" element={<Layout />}>
           <Route
             path=""
@@ -43,7 +45,17 @@ function App() {
             }
           />
 
-          <Route path="/view-responses" element={<ImageResponseView />} />
+          <Route
+            path="/view-responses"
+            element={
+              <Auth authentication={true}>
+                <ImageResponseView />
+              </Auth>
+            }
+          />
+          <Route path="/admin" element={<AdminPanel />} />
+
+          <Route path="/testing" element={<FeedbackFormBuilder />} />
         </Route>
       </Routes>
       <Toaster position="top-center" reverseOrder={false} />

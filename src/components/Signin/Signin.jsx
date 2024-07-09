@@ -3,6 +3,7 @@ import "./Signin.css";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../store/Slices/authSlice";
+import toast from "react-hot-toast";
 
 function Signin() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ function Signin() {
     const res = await dispatch(loginUser(details));
 
     if ((res.type = "loginUser/fulfilled")) {
+      toast.success("Logged in successfully");
       navigate("/");
     }
   };

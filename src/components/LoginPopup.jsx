@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const LoginPopup = () => {
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black/50 bg-opacity-75 z-50">
+    <div className="fixed inset-0 flex justify-center items-center bg-black/50 bg-opacity-75 z-[999]">
       <div className="bg-slate-100 border rounded-lg p-5 text-center">
         <p className="text-xl font-medium mb-2 ">Login or Signup to continue</p>
         <div className="flex justify-around items-center gap-3">
