@@ -8,12 +8,13 @@ import {
   Signin,
   ImageResponseView,
   AllImageResponse,
+  FormBuilder,
 } from "./components";
 import Auth from "./components/Auth";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "./store/Slices/authSlice";
 import { Toaster } from "react-hot-toast";
-import FeedbackFormBuilder from "./components/customque";
+
 import ViewImageDetails from "./components/ViewImageDetails";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
+        <Route path="/feedback/:id" element={<ViewImageDetails />} />
 
         <Route path="/" element={<Layout />}>
           <Route
@@ -56,7 +58,7 @@ function App() {
           />
           <Route path="/all-images" element={<AllImageResponse />} />
 
-          <Route path="/feedback/:id" element={<ViewImageDetails />} />
+          <Route path="/test" element={<FormBuilder />} />
         </Route>
       </Routes>
       <Toaster position="top-center" reverseOrder={false} />

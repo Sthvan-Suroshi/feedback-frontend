@@ -8,6 +8,7 @@ import ImageResponseView from "./ImageResponseView";
 import Loader from "./Loader";
 import EditImageFeedback from "./EditImageFeedback";
 import AllImageResponse from "./AllImageResponse";
+import FormBuilder from "./FormBuilder";
 export {
   Home,
   ImageFeedback,
@@ -19,4 +20,5 @@ export {
   Loader,
   EditImageFeedback,
   AllImageResponse,
+  FormBuilder,
 };
