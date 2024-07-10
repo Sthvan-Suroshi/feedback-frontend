@@ -4,6 +4,7 @@ const initialState = {
   userDetails: null,
   loading: false,
   status: false,
+  isAdmin: false,
 };
 
 export const registerUser = createAsyncThunk(
@@ -16,7 +17,6 @@ export const registerUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk("loginUser", async (details) => {
   const response = await axiosInstance.post("/users/login", details);
-  console.log(response);
   return response.data.data;
 });
 
@@ -44,6 +44,7 @@ const authSlice = createSlice({
         state.userDetails = action.payload;
         state.loading = false;
         state.status = true;
+        state.isAdmin = action.payload.accountType === "admin" ? true : false;
       })
       .addCase(registerUser.rejected, (state) => {
         state.loading = false;
@@ -59,6 +60,8 @@ const authSlice = createSlice({
         state.userDetails = action.payload;
         state.loading = false;
         state.status = true;
+        state.isAdmin = action.payload.accountType === "admin" ? true : false;
+        console.log(state.isAdmin);
       })
       .addCase(loginUser.rejected, (state) => {
         state.loading = false;
@@ -74,6 +77,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.status = true;
         state.userDetails = action.payload;
+        state.isAdmin = action.payload.accountType === "admin" ? true : false;
       })
       .addCase(getCurrentUser.rejected, (state) => {
         state.loading = false;
@@ -89,6 +93,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.status = false;
         state.userDetails = null;
+        state.isAdmin = false;
       });
   },
 });

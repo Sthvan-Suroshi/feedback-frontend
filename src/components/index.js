@@ -7,7 +7,7 @@ import LoginPopup from "./LoginPopup";
 import ImageResponseView from "./ImageResponseView";
 import Loader from "./Loader";
 import EditImageFeedback from "./EditImageFeedback";
-import AdminPanel from "./AdminPanel";
+import AllImageResponse from "./AllImageResponse";
 export {
   Home,
   ImageFeedback,
@@ -18,5 +18,5 @@ export {
   ImageResponseView,
   Loader,
   EditImageFeedback,
-  AdminPanel,
+  AllImageResponse,
 };

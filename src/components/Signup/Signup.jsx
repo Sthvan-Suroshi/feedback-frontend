@@ -2,7 +2,7 @@ import "./Signup.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../../store/Slices/authSlice.js";
+import { getCurrentUser, registerUser } from "../../store/Slices/authSlice.js";
 
 function Signup() {
   const {
@@ -16,9 +16,8 @@ function Signup() {
 
   const submit = async (details) => {
     const res = await dispatch(registerUser(details));
-    console.log(res);
-
-    if ((res.type = "registerUser/fulfilled")) {
+    await dispatch(getCurrentUser());
+    if (res.type === "registerUser/fulfilled") {
       toast.success("Registered successfully");
       navigate("/");
     }
