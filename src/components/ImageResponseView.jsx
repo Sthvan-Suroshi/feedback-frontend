@@ -15,6 +15,8 @@ function ImageResponseView() {
   const feedbacks = useSelector((state) => state.imageFeedback?.feedbacks);
   const loadingStatus = useSelector((state) => state.imageFeedback.loading);
 
+  console.log(feedbacks);
+
   const [popUp, setPopUp] = useState(false);
   const [post, setPost] = useState(null);
 

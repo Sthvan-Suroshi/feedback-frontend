@@ -8,14 +8,13 @@ import {
   Signin,
   ImageResponseView,
   AllImageResponse,
+  ViewImageDetails,
   FormBuilder,
 } from "./components";
 import Auth from "./components/Auth";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "./store/Slices/authSlice";
 import { Toaster } from "react-hot-toast";
-
-import ViewImageDetails from "./components/ViewImageDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -56,9 +55,16 @@ function App() {
               </Auth>
             }
           />
-          <Route path="/all-images" element={<AllImageResponse />} />
+          <Route
+            path="/all-images"
+            element={
+              <Auth authentication={true}>
+                <AllImageResponse />
+              </Auth>
+            }
+          />
 
-          <Route path="/test" element={<FormBuilder />} />
+          <Route path="/create-form" element={<FormBuilder />} />
         </Route>
       </Routes>
       <Toaster position="top-center" reverseOrder={false} />

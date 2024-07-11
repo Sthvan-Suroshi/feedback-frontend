@@ -8,6 +8,7 @@ function ViewImageDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.imageFeedback.loading);
+
   useEffect(() => {
     dispatch(getImageFeedback(id));
   }, [id]);
@@ -22,10 +23,10 @@ function ViewImageDetails() {
     );
   }
   return (
-    <div className="w-screen ">
+    <div className="w-screen">
       {feedback && (
         <>
-          <div className="flex items-start justify-center gap-4 h-screen p-5 ">
+          <div className="flex items-center justify-center gap-4 h-screen p-2 ">
             <div className="basis-1/2 h-3/4">
               <img
                 src={feedback.imageUrl}
@@ -34,13 +35,13 @@ function ViewImageDetails() {
               />
             </div>
             <div className="basis-1/2 h-3/4">
-              <h3 className="text-xl h-fit bg-slate-400 mb-3 p-2">
+              <h3 className="text-xl bg-slate-400 mb-3 p-2">
                 {feedback.title}
               </h3>
 
-              <p className="text-lg h-fit bg-slate-400 mb-3 p-2">
-                {feedback.description}
-              </p>
+              <div className="text-lg overflow-y-scroll h-full bg-slate-400 mb-3 p-2 custom-scrollbar">
+                <p>{feedback.description}</p>
+              </div>
             </div>
           </div>
         </>

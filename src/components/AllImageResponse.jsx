@@ -32,7 +32,7 @@ function AllImageResponse() {
                 <p className="text-ellipsis p-3">{feedback.title}</p>
               </div>
               <div className="basis-1/4 h-32 flex items-center justify-center gap-10 border-l-2 text-black">
-                <Link to={`/feedback/${feedback._id}`}>View Detials</Link>
+                <Link to={`/feedback/${feedback._id}`}>View Details</Link>
               </div>
             </div>
           </div>
@@ -40,5 +40,5 @@ function AllImageResponse() {
     </div>
   );
 }
-
+  
 export default AllImageResponse;

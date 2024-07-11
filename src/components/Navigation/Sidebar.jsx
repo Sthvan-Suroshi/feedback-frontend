@@ -4,6 +4,7 @@ import { GoUpload } from "react-icons/go";
 import { MdGridView } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
+import { FaWpforms } from "react-icons/fa";
 
 const Sidebar = () => {
   const isAdmin = useSelector((state) => state.auth.isAdmin);
@@ -25,6 +26,12 @@ const Sidebar = () => {
       icon: <IoHomeOutline />,
       path: "/all-images",
       admin: true,
+    },
+    {
+      name: "Create Form",
+      icon: <FaWpforms />,
+      path: "/create-form",
+      admin: false,
     },
   ];
 

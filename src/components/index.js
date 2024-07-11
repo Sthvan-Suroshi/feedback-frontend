@@ -8,6 +8,12 @@ import ImageResponseView from "./ImageResponseView";
 import Loader from "./Loader";
 import EditImageFeedback from "./EditImageFeedback";
 import AllImageResponse from "./AllImageResponse";
+import ViewImageDetails from "./ViewImageDetails";
+import QuestionsList from "./QuestionList";
+import OptionsList from "./OptionList";
+import FormCheckbox from "./FormCheckBox";
+import FormTextArea from "./FormTextArea";
+import FormInput from "./FormInput";
 import FormBuilder from "./FormBuilder";
 export {
   Home,
@@ -20,5 +26,11 @@ export {
   Loader,
   EditImageFeedback,
   AllImageResponse,
+  ViewImageDetails,
+  OptionsList,
+  QuestionsList,
+  FormCheckbox,
+  FormTextArea,
+  FormInput,
   FormBuilder,
 };

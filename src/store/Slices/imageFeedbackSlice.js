@@ -137,7 +137,7 @@ const imageFeedbackSlice = createSlice({
 
     builder.addCase(getAllUserImageResponses.fulfilled, (state, action) => {
       state.loading = false;
-      state.feedback = action.payload;
+      state.feedbacks = action.payload;
     });
 
     builder
