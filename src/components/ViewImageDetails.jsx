@@ -6,11 +6,12 @@ import Loader from "./Loader";
 
 function ViewImageDetails() {
   const { id } = useParams();
+  const imgId = atob(id);
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.imageFeedback.loading);
 
   useEffect(() => {
-    dispatch(getImageFeedback(id));
+    dispatch(getImageFeedback(imgId));
   }, [id]);
 
   const feedback = useSelector((state) => state.imageFeedback.feedback);

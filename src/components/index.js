@@ -14,7 +14,7 @@ import OptionsList from "./OptionList";
 import FormCheckbox from "./FormCheckBox";
 import FormTextArea from "./FormTextArea";
 import FormInput from "./FormInput";
-import FormBuilder from "./FormBuilder";
+import FormBuilder from "../Pages/FormBuilder";
 export {
   Home,
   ImageFeedback,

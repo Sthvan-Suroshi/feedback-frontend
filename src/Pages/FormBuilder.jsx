@@ -8,7 +8,7 @@ import {
   FormCheckbox,
   FormTextArea,
   FormInput,
-} from "./index";
+} from "../components/index";
 
 const FormBuilder = () => {
   const dispatch = useDispatch();
