@@ -15,6 +15,7 @@ import FormCheckbox from "./FormCheckBox";
 import FormTextArea from "./FormTextArea";
 import FormInput from "./FormInput";
 import FormBuilder from "../Pages/FormBuilder";
+import AllFormsTable from "./AllFormsTable";
 export {
   Home,
   ImageFeedback,
@@ -33,4 +34,5 @@ export {
   FormTextArea,
   FormInput,
   FormBuilder,
+  AllFormsTable,
 };

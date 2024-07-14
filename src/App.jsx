@@ -10,6 +10,7 @@ import {
   AllImageResponse,
   ViewImageDetails,
   FormBuilder,
+  AllFormsTable,
 } from "./components";
 import Auth from "./components/Auth";
 import { useDispatch } from "react-redux";
@@ -65,6 +66,7 @@ function App() {
           />
 
           <Route path="/create-form" element={<FormBuilder />} />
+          <Route path="/all-forms" element={<AllFormsTable />} />
         </Route>
       </Routes>
       <Toaster position="top-center" reverseOrder={false} />

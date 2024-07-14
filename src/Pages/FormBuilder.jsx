@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { useForm, useFieldArray, Controller } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { addForm } from "../store/Slices/formSlice";
 import {
@@ -9,6 +9,7 @@ import {
   FormTextArea,
   FormInput,
 } from "../components/index";
+import toast from "react-hot-toast";
 
 const FormBuilder = () => {
   const dispatch = useDispatch();
@@ -34,30 +35,30 @@ const FormBuilder = () => {
 
   const onSubmit = useCallback(
     async (data) => {
-      const allQuestions = [
-        ...questions,
-        {
-          question: data.question,
-          options: data.useDescription
-            ? null
-            : data.options
-                .map((opt) => opt.value)
-                .filter((opt) => opt.trim() !== ""),
-          description: data.useDescription ? true : null,
-        },
-      ];
-
+      if (questions.length === 0) {
+        toast.error("Please add atleast one question");
+        return;
+      }
       const formData = {
         title: data.title,
         description: data.description,
-        questions: allQuestions,
+        questions,
       };
 
-      console.log(formData);
       const res = await dispatch(addForm(formData));
-      console.log(res);
+      if (res.type === "addForm/fulfilled") {
+        toast.success("Form added successfully");
+        reset({
+          title: "",
+          description: "",
+          question: "",
+          options: [{ value: "" }],
+          useDescription: false,
+        });
+        setQuestions([]);
+      }
     },
-    [questions, dispatch]
+    [questions, dispatch, reset]
   );
 
   const handleAddQuestion = useCallback(
@@ -126,23 +127,13 @@ const FormBuilder = () => {
     <div className="mx-auto p-4 flex gap-40">
       <form onSubmit={handleSubmit(onSubmit)} className="w-96">
         <h2 className="text-2xl font-bold mb-4">Create Feedback Form</h2>
-        <FormInput
-          label="Form Title"
-          name="title"
-          control={control}
-          rules={{ required: "Title is required" }}
-        />
+        <FormInput label="Form Title" name="title" control={control} />
         <FormTextArea
           label="Form Description"
           name="description"
           control={control}
         />
-        <FormInput
-          label="Question"
-          name="question"
-          control={control}
-          rules={{ required: "Question is required" }}
-        />
+        <FormInput label="Question" name="question" control={control} />
         <FormCheckbox
           label="Use Description"
           name="useDescription"

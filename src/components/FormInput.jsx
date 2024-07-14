@@ -1,13 +1,12 @@
 import { Controller } from "react-hook-form";
 
-const FormInput = ({ label, name, control, rules }) => (
+const FormInput = ({ label, name, control }) => (
   <div className="mb-4">
     <label className="block text-sm font-medium text-gray-700">
       {label}:
       <Controller
         name={name}
         control={control}
-        rules={rules}
         render={({ field, fieldState }) => (
           <>
             <input

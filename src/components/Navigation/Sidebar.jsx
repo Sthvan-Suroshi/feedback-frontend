@@ -33,6 +33,12 @@ const Sidebar = () => {
       path: "/create-form",
       admin: false,
     },
+    {
+      name: "All Forms",
+      icon: <FaWpforms />,
+      path: "/all-forms",
+      admin: false,
+    },
   ];
 
   const filteredNavItems = navItems.filter((item) => item.admin === isAdmin);
