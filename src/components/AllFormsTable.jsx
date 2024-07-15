@@ -11,7 +11,6 @@ function AllFormsTable() {
   const dispatch = useDispatch();
   const forms = useSelector((state) => state.form.forms);
   const loadingStatus = useSelector((state) => state.form.loading);
-  // Maintain an individual status for each form
 
   const handleDelete = async (id) => {
     const res = await dispatch(deleteForm(id));
@@ -28,7 +27,6 @@ function AllFormsTable() {
   useEffect(() => {
     dispatch(getFormsByUser());
   }, [dispatch]);
-
 
   if (forms.length === 0) {
     return (

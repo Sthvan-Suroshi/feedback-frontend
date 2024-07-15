@@ -7,61 +7,69 @@ import { useSelector } from "react-redux";
 import { FaWpforms } from "react-icons/fa";
 
 const Sidebar = () => {
-  const isAdmin = useSelector((state) => state.auth.isAdmin);
+  const accountType = useSelector((state) => state.auth.accountType);
+
   const navItems = [
     {
       name: "Upload Feedback",
       icon: <GoUpload />,
       path: "/upload-feedback",
-      admin: false,
+      roles: ["student"],
     },
     {
       name: "Your Feedbacks",
       icon: <MdGridView />,
       path: "/view-responses",
-      admin: false,
+      roles: ["student"],
+    },
+    {
+      name: "Fill Form",
+      icon: <FaWpforms />,
+      path: "/fill-form",
+      roles: ["student"],
     },
     {
       name: "All Images",
       icon: <IoHomeOutline />,
       path: "/all-images",
-      admin: true,
+      roles: ["admin"],
     },
     {
       name: "Create Form",
       icon: <FaWpforms />,
       path: "/create-form",
-      admin: false,
+      roles: ["instructor"],
     },
     {
-      name: "All Forms",
+      name: "Your Forms",
       icon: <FaWpforms />,
-      path: "/all-forms",
-      admin: false,
+      path: "/your-forms",
+      roles: ["instructor"],
     },
   ];
 
-  const filteredNavItems = navItems.filter((item) => item.admin === isAdmin);
+  const filteredNavItems = navItems.filter((item) =>
+    item.roles.includes(accountType)
+  );
 
   return (
     <div className="w-[15vw] border-slate-400 border-x-2 h-screen">
       <div className="flex flex-col gap-2">
-        {filteredNavItems &&
-          filteredNavItems.map((item) => (
-            <div key={item.name}>
-              <NavLink
-                to={item.path}
-                className={({ isActive }) =>
-                  isActive
-                    ? "flex items-center gap-2 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] bg-slate-400 hover:bg-[#27374d] hover:text-[#dde6ed]"
-                    : "flex items-center gap-2 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] hover:bg-[#27374d] hover:text-[#dde6ed]"
-                }
-              >
-                {item.icon}
-                {item.name}
-              </NavLink>
-            </div>
-          ))}
+        {filteredNavItems.map((item) => (
+          <div key={item.name}>
+            <NavLink
+              to={item.path}
+              className={({ isActive }) =>
+                isActive
+                  ? "flex items-center gap-2 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] bg-slate-400 hover:bg-[#27374d] hover:text-[#dde6ed]"
+                  : "flex items-center gap-2 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] hover:bg-[#27374d] hover:text-[#dde6ed]"
+              }
+            >
+              {item.icon}
+              {item.name}
+            </NavLink>
+          </div>
+        ))}
       </div>
     </div>
   );

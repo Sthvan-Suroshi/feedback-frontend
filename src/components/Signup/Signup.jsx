@@ -1,7 +1,7 @@
 import "./Signup.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getCurrentUser, registerUser } from "../../store/Slices/authSlice.js";
 
 function Signup() {
@@ -16,11 +16,11 @@ function Signup() {
 
   const submit = async (details) => {
     const res = await dispatch(registerUser(details));
-    await dispatch(getCurrentUser());
     if (res.type === "registerUser/fulfilled") {
       toast.success("Registered successfully");
-      navigate("/");
+      navigate("/upload-feedback");
     }
+    await dispatch(getCurrentUser());
   };
 
   return (
@@ -67,7 +67,7 @@ function Signup() {
 
           <div className="incont">
             <input
-              name="usn"
+              name="college_id"
               placeholder=""
               type="text"
               required
@@ -87,8 +87,8 @@ function Signup() {
                 required: true,
               })}
             >
-              <option value="instructor">Instructor</option>
               <option value="student">Student (Default)</option>
+              <option value="instructor">Instructor</option>
             </select>
           </div>
 

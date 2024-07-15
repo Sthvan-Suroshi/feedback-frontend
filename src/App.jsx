@@ -30,19 +30,12 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/feedback/:id" element={<ViewImageDetails />} />
 
-        <Route path="/" element={<Layout />}>
-          <Route
-            path=""
-            element={
-              <Auth authentication={false}>
-                <Home />
-              </Auth>
-            }
-          />
+        <Route path="" element={<Layout />}>
+          <Route path="/" element={<Home />} />
           <Route
             path="/upload-feedback"
             element={
-              <Auth authentication={true}>
+              <Auth authentication={true} allowedRoles={["student"]}>
                 <ImageFeedback />
               </Auth>
             }
@@ -51,22 +44,41 @@ function App() {
           <Route
             path="/view-responses"
             element={
-              <Auth authentication={true}>
+              <Auth
+                authentication={true}
+                allowedRoles={["instructor", "student"]}
+              >
                 <ImageResponseView />
               </Auth>
             }
           />
+
           <Route
             path="/all-images"
             element={
-              <Auth authentication={true}>
+              <Auth authentication={true} allowedRoles={["admin"]}>
                 <AllImageResponse />
               </Auth>
             }
           />
 
-          <Route path="/create-form" element={<FormBuilder />} />
-          <Route path="/all-forms" element={<AllFormsTable />} />
+          <Route
+            path="/create-form"
+            element={
+              <Auth authentication={true} allowedRoles={["instructor"]}>
+                <FormBuilder />
+              </Auth>
+            }
+          />
+
+          <Route
+            path="/your-forms"
+            element={
+              <Auth authentication={true} allowedRoles={["instructor"]}>
+                <AllFormsTable />
+              </Auth>
+            }
+          />
         </Route>
       </Routes>
       <Toaster position="top-center" reverseOrder={false} />

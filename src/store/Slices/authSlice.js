@@ -4,7 +4,7 @@ const initialState = {
   userDetails: null,
   loading: false,
   status: false,
-  isAdmin: false,
+  accountType: null,
 };
 
 export const registerUser = createAsyncThunk(
@@ -44,7 +44,7 @@ const authSlice = createSlice({
         state.userDetails = action.payload;
         state.loading = false;
         state.status = true;
-        state.isAdmin = action.payload.accountType === "admin" ? true : false;
+        state.accountType = action.payload.accountType;
       })
       .addCase(registerUser.rejected, (state) => {
         state.loading = false;
@@ -60,8 +60,7 @@ const authSlice = createSlice({
         state.userDetails = action.payload;
         state.loading = false;
         state.status = true;
-        state.isAdmin = action.payload.accountType === "admin" ? true : false;
-        console.log(state.isAdmin);
+        state.accountType = action.payload.accountType;
       })
       .addCase(loginUser.rejected, (state) => {
         state.loading = false;
@@ -77,7 +76,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.status = true;
         state.userDetails = action.payload;
-        state.isAdmin = action.payload.accountType === "admin" ? true : false;
+        state.accountType = action.payload.accountType;
       })
       .addCase(getCurrentUser.rejected, (state) => {
         state.loading = false;
@@ -93,7 +92,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.status = false;
         state.userDetails = null;
-        state.isAdmin = false;
+        state.accountType = null;
       });
   },
 });
