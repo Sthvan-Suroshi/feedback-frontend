@@ -8,7 +8,6 @@ function Auth({ children, authentication, allowedRoles }) {
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.status);
   let accountType = useSelector((state) => state.auth.accountType);
-  console.log(accountType);
   accountType === null ? (accountType = "all") : accountType;
 
   useEffect(() => {

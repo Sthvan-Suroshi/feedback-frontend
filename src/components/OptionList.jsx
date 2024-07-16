@@ -20,7 +20,7 @@ const OptionsList = ({ fields, control, remove, append }) => (
         </label>
         <button
           type="button"
-          className="text-red-500 rounded-md shadow-sm hover:text-black"
+          className="text-red-500 font-semibold  hover:text-red-700"
           onClick={() => remove(index)}
         >
           Delete Option
@@ -29,7 +29,7 @@ const OptionsList = ({ fields, control, remove, append }) => (
     ))}
     <button
       type="button"
-      className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-blue-600"
+      className="text-blue-500 font-semibold  hover:text-blue-700"
       onClick={() => append({ value: "" })}
     >
       Add Option

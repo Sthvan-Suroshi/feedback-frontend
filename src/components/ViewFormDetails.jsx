@@ -68,14 +68,11 @@ function ViewFormDetails() {
   };
 
   const handleSaveEdit = async (questionId) => {
-    console.log(questionId);
-
     const updatedQuestion = {
       questionId,
       question: editedQuestions[questionId],
       options: editedOptions[questionId],
     };
-    console.log(updatedQuestion);
 
     const res = await dispatch(updateQuestion(updatedQuestion));
     if (res.type === "updateQuestion/fulfilled") {

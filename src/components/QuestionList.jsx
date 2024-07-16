@@ -27,14 +27,14 @@ const QuestionsList = ({
           <div className="my-2">
             <button
               type="button"
-              className="bg-yellow-500 text-white px-2 py-1 rounded-md shadow-sm hover:bg-yellow-600 mr-2"
+              className="text-blue-500 font-semibold mb-4 hover:text-blue-700 mr-2"
               onClick={() => handleEditQuestion(index)}
             >
               Edit
             </button>
             <button
               type="button"
-              className="bg-red-500 text-white px-2 py-1 rounded-md shadow-sm hover:bg-red-600"
+              className="text-red-500 font-semibold mb-4 hover:text-red-700"
               onClick={() => handleDeleteQuestion(index)}
             >
               Delete
