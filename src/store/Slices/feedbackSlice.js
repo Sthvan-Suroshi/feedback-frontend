@@ -14,7 +14,8 @@ export const addFeedback = createAsyncThunk("addFeedback", async (details) => {
 const feedbackSlice = createSlice({
   name: "feedback",
   initialState,
-  reducers: (builder) => {
+  reducers: {},
+  extraReducers: (builder) => {
     builder
       .addCase(addFeedback.pending, (state) => {
         state.loading = true;

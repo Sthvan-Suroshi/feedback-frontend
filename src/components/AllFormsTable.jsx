@@ -6,6 +6,7 @@ import { TbFileText } from "react-icons/tb";
 import { MdDeleteOutline } from "react-icons/md";
 import { Loader } from "./index";
 import toast from "react-hot-toast";
+import { formatDate } from "../utils/formatDate.js";
 
 function AllFormsTable() {
   const dispatch = useDispatch();
@@ -46,26 +47,58 @@ function AllFormsTable() {
 
   return (
     <div className="w-screen p-3">
-      <div className="w-full flex gap-4 flex-wrap">
-        {forms &&
-          forms.map((form) => (
-            <div key={form._id} className="flex">
-              <Link className="text-8xl relative text-center" key={form._id}>
-                <span
-                  className="absolute top-0 right-0 text-2xl bg-red-400 rounded-full p-[1px] hover:bg-black hover:text-white"
-                  onClick={() => handleDelete(form._id)}
-                >
-                  <MdDeleteOutline />
-                </span>
-                <TbFileText />
-                <div className="text-lg w-28 ">
-                  <p className="text-ellipsis whitespace-nowrap overflow-hidden">
+      <div>
+        <div className="mt-1">
+          <table className="w-full text-center table-auto">
+            <thead>
+              <tr>
+                <th className="px-4 py-2 w-1/3">Title</th>
+                <th className="px-4 py-2 w-1/3">Created On</th>
+                <th className="px-4 py-2 w-1/3">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {forms.map((form) => (
+                <tr key={form._id} className="border-b">
+                  <td className="px-4 py-2 max-w-24 overflow-hidden text-ellipsis whitespace-nowrap w-1/3">
                     {form.title}
-                  </p>
-                </div>
-              </Link>
-            </div>
-          ))}
+                  </td>
+                  <td className="px-4 py-2 w-1/3">
+                    {formatDate(form.createdAt)}
+                  </td>
+                  <td className="px-4 py-2 flex items-center justify-center gap-3 ">
+                    <div className="relative group">
+                      <Link to={`/form/${btoa(form._id)}`}>
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-blue-600">
+                          <TbFileText />
+                        </button>
+                      </Link>
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
+                        <div className="bg-black text-white text-xs rounded py-1 px-2 shadow-lg">
+                          View 
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="relative group">
+                      <button
+                        className="bg-red-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-red-600"
+                        onClick={() => handleDelete(form._id)}
+                      >
+                        <MdDeleteOutline />
+                      </button>
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block opacity-0 group-hover:opacity-100 transition duration-300 delay-200">
+                        <div className="bg-black text-white text-xs rounded py-1 px-2 shadow-lg">
+                          Delete
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

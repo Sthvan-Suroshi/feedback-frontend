@@ -16,6 +16,7 @@ import Auth from "./components/Auth";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "./store/Slices/authSlice";
 import { Toaster } from "react-hot-toast";
+import ViewFormDetails from "./components/ViewFormDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/feedback/:id" element={<ViewImageDetails />} />
+        <Route path="/form/:id" element={<ViewFormDetails />} />
 
         <Route path="" element={<Layout />}>
           <Route path="/" element={<Home />} />

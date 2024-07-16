@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../utils/axiosInstance";
+
 const initialState = {
   loading: false,
   forms: [],
+  form: null,
 };
 
 export const addForm = createAsyncThunk("addForm", async (details) => {
@@ -16,13 +18,36 @@ export const getFormsByUser = createAsyncThunk("getFormsByUser", async () => {
 });
 
 export const deleteForm = createAsyncThunk("deleteForm", async (id) => {
-  const response = await axiosInstance.delete(`forms/${id}`);
+  await axiosInstance.delete(`forms/${id}`);
   return id;
 });
+
+export const getFormByDept = createAsyncThunk("getFormByDept", async () => {
+  const response = await axiosInstance.get(`forms/department/all-forms`);
+  return response.data.data;
+});
+
+export const getFormDetails = createAsyncThunk("getFormDetails", async (id) => {
+  const response = await axiosInstance.get(`forms/${id}`);
+
+  return response.data.data;
+});
+
+export const updateForm = createAsyncThunk("updateForm", async (details) => {
+  console.log(details);
+  const { formId } = details;
+  const response = await axiosInstance.patch(`forms/${formId}`, details);
+  return response.data;
+});
+
 const formSlice = createSlice({
   name: "form",
   initialState,
-  reducers: {},
+  reducers: {
+    resetForm: (state) => {
+      state.form = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(addForm.pending, (state) => {
@@ -59,7 +84,42 @@ const formSlice = createSlice({
       .addCase(deleteForm.rejected, (state) => {
         state.loading = false;
       });
+
+    builder
+      .addCase(getFormByDept.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getFormByDept.fulfilled, (state, action) => {
+        state.loading = false;
+        state.forms = action.payload;
+      })
+      .addCase(getFormByDept.rejected, (state) => {
+        state.loading = false;
+      });
+
+    builder
+      .addCase(getFormDetails.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getFormDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.form = action.payload;
+      });
+
+    builder
+      .addCase(updateForm.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateForm.fulfilled, (state, action) => {
+        state.loading = false;
+        state.form = action.payload;
+      })
+      .addCase(updateForm.rejected, (state) => {
+        state.loading = false;
+      });
   },
 });
+
+export const { resetForm } = formSlice.actions;
 
 export default formSlice.reducer;
