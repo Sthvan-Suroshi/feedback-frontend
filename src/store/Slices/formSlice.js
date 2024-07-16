@@ -34,11 +34,32 @@ export const getFormDetails = createAsyncThunk("getFormDetails", async (id) => {
 });
 
 export const updateForm = createAsyncThunk("updateForm", async (details) => {
-  console.log(details);
   const { formId } = details;
   const response = await axiosInstance.patch(`forms/${formId}`, details);
   return response.data;
 });
+
+export const deleteQuestion = createAsyncThunk(
+  "deleteQuestion",
+  async (questionId) => {
+    console.log(questionId);
+    const response = await axiosInstance.delete(`forms/question/${questionId}`);
+    console.log(response.data);
+    return response.data;
+  }
+);
+
+export const updateQuestion = createAsyncThunk(
+  "updateQuestion",
+  async (details) => {
+    const { questionId } = details;
+    const response = await axiosInstance.patch(
+      `forms/question/${questionId}`,
+      details
+    );
+    return response.data;
+  }
+);
 
 const formSlice = createSlice({
   name: "form",
@@ -115,6 +136,29 @@ const formSlice = createSlice({
         state.form = action.payload;
       })
       .addCase(updateForm.rejected, (state) => {
+        state.loading = false;
+      });
+
+    builder
+      .addCase(deleteQuestion.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteQuestion.fulfilled, (state, action) => {
+        state.loading = false;
+        state.form = action.payload;
+      })
+      .addCase(deleteQuestion.rejected, (state) => {
+        state.loading = false;
+      });
+
+    builder
+      .addCase(updateQuestion.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateQuestion.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(updateQuestion.rejected, (state) => {
         state.loading = false;
       });
   },

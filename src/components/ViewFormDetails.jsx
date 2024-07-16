@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteQuestion,
   getFormDetails,
   resetForm,
   updateForm,
+  updateQuestion,
 } from "../store/Slices/formSlice.js";
 import { IoIosArrowBack } from "react-icons/io";
 import Loader from "./Loader.jsx";
+import toast from "react-hot-toast";
 
 function ViewFormDetails() {
   const dispatch = useDispatch();
@@ -28,7 +31,7 @@ function ViewFormDetails() {
     return () => {
       dispatch(resetForm());
     };
-  }, [dispatch, formId, editMode]);
+  }, [dispatch, formId]);
 
   useEffect(() => {
     if (form) {
@@ -46,29 +49,42 @@ function ViewFormDetails() {
   }, [form]);
 
   const handleSaveForm = async () => {
-    const updatedQuestions = form.questions.map((question) => ({
-      ...question,
-      question: editedQuestions[question._id],
-      options: editedOptions[question._id],
-    }));
-
     const details = {
       formId,
       title: editedTitle,
       description: editedDescription,
-      questions: updatedQuestions,
     };
 
     const res = await dispatch(updateForm(details));
-    setEditMode(false);
+    if (res.type === "updateForm/fulfilled") {
+      toast.success("Form updated successfully");
+      setEditMode(false);
+      dispatch(getFormDetails(formId));
+    }
   };
 
   const handleEditQuestion = (questionId) => {
     setEditQuestionMode((prev) => [...prev, questionId]);
   };
 
-  const handleSaveEdit = (questionId) => {
-    setEditQuestionMode((prev) => prev.filter((id) => id !== questionId));
+  const handleSaveEdit = async (questionId) => {
+    console.log(questionId);
+
+    const updatedQuestion = {
+      questionId,
+      question: editedQuestions[questionId],
+      options: editedOptions[questionId],
+    };
+    console.log(updatedQuestion);
+
+    const res = await dispatch(updateQuestion(updatedQuestion));
+    if (res.type === "updateQuestion/fulfilled") {
+      setEditQuestionMode((prev) => prev.filter((id) => id !== questionId));
+      toast.success("Question updated successfully");
+      dispatch(getFormDetails(formId));
+    } else {
+      toast.error("Failed to update question");
+    }
   };
 
   const handleQuestionChange = (questionId, value) => {
@@ -94,8 +110,14 @@ function ViewFormDetails() {
     }));
   };
 
-  const handleDeleteQuestion = (questionId) => {
-    console.log("Deleting question:", questionId);
+  const handleDeleteQuestion = async (questionId) => {
+    const res = await dispatch(deleteQuestion(questionId));
+    if (res.type === "deleteQuestion/fulfilled") {
+      toast.success("Question deleted successfully");
+      dispatch(getFormDetails(formId));
+    } else {
+      toast.error("Failed to delete question");
+    }
   };
 
   if (!form || loading) {
@@ -194,12 +216,14 @@ function ViewFormDetails() {
                         >
                           Cancel
                         </button>
-                        <button
-                          className="text-blue-500 font-semibold ml-2"
-                          onClick={() => handleAddOption(question._id)}
-                        >
-                          Add Option
-                        </button>
+                        {!question.description && (
+                          <button
+                            className="text-blue-500 font-semibold ml-2"
+                            onClick={() => handleAddOption(question._id)}
+                          >
+                            Add Option
+                          </button>
+                        )}
                       </>
                     )}
                     {!editQuestionMode.includes(question._id) && (
@@ -212,16 +236,32 @@ function ViewFormDetails() {
                     )}
                   </div>
                 </div>
-                {!editQuestionMode.includes(question._id) && (
-                  <ul className="list-inside list-decimal">
-                    {question.options.map((option, index) => (
-                      <li key={index} className="ml-4">
-                        {option}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                {editQuestionMode.includes(question._id) && (
+                {!editQuestionMode.includes(question._id) ? (
+                  question.description ? (
+                    <textarea
+                      className="border rounded py-1 px-2 w-full"
+                      placeholder="Enter your answer here"
+                      disabled
+                    />
+                  ) : (
+                    <ul className="list-inside list-decimal">
+                      {question.options.map((option, index) => (
+                        <li key={index} className="ml-4">
+                          {option}
+                        </li>
+                      ))}
+                    </ul>
+                  )
+                ) : question.description ? (
+                  <textarea
+                    className="border rounded py-1 px-2 w-full"
+                    placeholder="Edit your answer here"
+                    value={editedQuestions[question._id] || ""}
+                    onChange={(e) =>
+                      handleQuestionChange(question._id, e.target.value)
+                    }
+                  />
+                ) : (
                   <ul className="list-inside list-decimal">
                     {editedOptions[question._id]?.map((option, index) => (
                       <li key={index} className="ml-4">

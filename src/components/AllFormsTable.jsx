@@ -75,7 +75,7 @@ function AllFormsTable() {
                       </Link>
                       <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
                         <div className="bg-black text-white text-xs rounded py-1 px-2 shadow-lg">
-                          View 
+                          View
                         </div>
                       </div>
                     </div>
