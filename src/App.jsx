@@ -14,12 +14,14 @@ import {
   ViewAllForms,
   FeedbackForm,
   FormAnalytics,
+  AdminViewForms,
+  ViewFormDetails,
+  CreateAdmin,
 } from "./components";
 import Auth from "./components/Auth";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "./store/Slices/authSlice";
 import { Toaster } from "react-hot-toast";
-import ViewFormDetails from "./components/ViewFormDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,9 +34,30 @@ function App() {
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
-        <Route path="/feedback/:id" element={<ViewImageDetails />} />
-        <Route path="/form/:id" element={<ViewFormDetails />} />
-        <Route path="/analytics/:id" element={<FormAnalytics />} />
+        <Route
+          path="/feedback/:id"
+          element={
+            <Auth authentication={true} allowedRoles={["admin"]}>
+              <ViewImageDetails />
+            </Auth>
+          }
+        />
+        <Route
+          path="/form/:id"
+          element={
+            <Auth authentication={true} allowedRoles={["admin", "instructor"]}>
+              <ViewFormDetails />
+            </Auth>
+          }
+        />
+        <Route
+          path="/analytics/:id"
+          element={
+            <Auth authentication={true} allowedRoles={["admin", "instructor"]}>
+              <FormAnalytics />
+            </Auth>
+          }
+        />
         <Route
           path="/fill-form/:id"
           element={
@@ -99,6 +122,22 @@ function App() {
             element={
               <Auth authentication={true} allowedRoles={["student"]}>
                 <ViewAllForms />
+              </Auth>
+            }
+          />
+          <Route
+            path="/admin/view-forms"
+            element={
+              <Auth authentication={true} allowedRoles={["admin"]}>
+                <AdminViewForms />
+              </Auth>
+            }
+          />
+          <Route
+            path="/add-admin"
+            element={
+              <Auth authentication={true} allowedRoles={["admin"]}>
+                <CreateAdmin />
               </Auth>
             }
           />

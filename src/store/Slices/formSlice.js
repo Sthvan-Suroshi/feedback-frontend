@@ -61,6 +61,11 @@ export const updateQuestion = createAsyncThunk(
   }
 );
 
+export const getAllForms = createAsyncThunk("getAllForms", async () => {
+  const response = await axiosInstance.get(`forms/admin/all-forms`);
+  return response.data.data;
+});
+
 const formSlice = createSlice({
   name: "form",
   initialState,
@@ -159,6 +164,18 @@ const formSlice = createSlice({
         state.loading = false;
       })
       .addCase(updateQuestion.rejected, (state) => {
+        state.loading = false;
+      });
+
+    builder
+      .addCase(getAllForms.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllForms.fulfilled, (state, action) => {
+        state.loading = false;
+        state.forms = action.payload;
+      })
+      .addCase(getAllForms.rejected, (state) => {
         state.loading = false;
       });
   },

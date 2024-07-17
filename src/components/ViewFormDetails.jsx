@@ -18,6 +18,7 @@ function ViewFormDetails() {
   const formId = atob(id);
   const form = useSelector((state) => state.form.form);
   const loading = useSelector((state) => state.form.loading);
+  const accountType = useSelector((state) => state.auth.accountType);
 
   const [editMode, setEditMode] = useState(false);
   const [editedTitle, setEditedTitle] = useState("");
@@ -129,12 +130,15 @@ function ViewFormDetails() {
 
   return (
     <div className="bg-white shadow-md rounded-lg p-6 max-w-xl mx-auto my-4">
-      <Link to="/your-forms" className="flex items-center">
+      <Link
+        to={accountType === "admin" ? "/admin/view-forms" : "/your-forms"}
+        className="flex items-center"
+      >
         <IoIosArrowBack /> Back
       </Link>
 
       {editMode ? (
-        <div className="mb-4">
+        <div className="mb-4 flex flex-col">
           <input
             type="text"
             className="border rounded py-1 px-2 mb-2"
@@ -142,7 +146,8 @@ function ViewFormDetails() {
             onChange={(e) => setEditedTitle(e.target.value)}
           />
           <textarea
-            className="border rounded py-1 px-2 mb-2"
+            className="border rounded py-1 px-2 mb-2 resize-none"
+            rows={6}
             value={editedDescription}
             onChange={(e) => setEditedDescription(e.target.value)}
           />

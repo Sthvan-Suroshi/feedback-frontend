@@ -5,6 +5,7 @@ import { MdGridView } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { FaWpforms } from "react-icons/fa";
+import { FaRegUser } from "react-icons/fa";
 
 const Sidebar = () => {
   const accountType = useSelector((state) => state.auth.accountType);
@@ -45,6 +46,18 @@ const Sidebar = () => {
       icon: <FaWpforms />,
       path: "/your-forms",
       roles: ["instructor"],
+    },
+    {
+      name: "All Forms",
+      icon: <FaWpforms />,
+      path: "/admin/view-forms",
+      roles: ["admin"],
+    },
+    {
+      name: "Create Admin",
+      icon: <FaRegUser />,
+      path: "/add-admin",
+      roles: ["admin"],
     },
   ];
 
