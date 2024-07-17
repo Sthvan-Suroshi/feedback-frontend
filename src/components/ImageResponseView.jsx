@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   deleteImageFeedback,
   getAllUserImageResponses,
+  resetImageFeedback,
 } from "../store/Slices/imageFeedbackSlice";
 import { EditImageFeedback, Loader } from "./index";
 import toast from "react-hot-toast";
@@ -21,6 +22,10 @@ function ImageResponseView() {
 
   useEffect(() => {
     dispatch(getAllUserImageResponses());
+
+    return () => {
+      dispatch(resetImageFeedback());
+    };
   }, [dispatch, popUp]);
 
   const deleteResponse = async (id) => {

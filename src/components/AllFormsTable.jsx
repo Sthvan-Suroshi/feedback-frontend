@@ -1,12 +1,17 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteForm, getFormsByUser } from "../store/Slices/formSlice";
+import {
+  deleteForm,
+  getFormsByUser,
+  resetForm,
+} from "../store/Slices/formSlice";
 import { Link } from "react-router-dom";
 import { TbFileText } from "react-icons/tb";
 import { MdDeleteOutline } from "react-icons/md";
 import { Loader } from "./index";
 import toast from "react-hot-toast";
 import { formatDate } from "../utils/formatDate.js";
+import { GrAnalytics } from "react-icons/gr";
 
 function AllFormsTable() {
   const dispatch = useDispatch();
@@ -27,6 +32,10 @@ function AllFormsTable() {
 
   useEffect(() => {
     dispatch(getFormsByUser());
+
+    return () => {
+      dispatch(resetForm());
+    };
   }, [dispatch]);
 
   if (forms.length === 0) {
@@ -69,7 +78,7 @@ function AllFormsTable() {
                   <td className="px-4 py-2 flex items-center justify-center gap-3 ">
                     <div className="relative group">
                       <Link to={`/form/${btoa(form._id)}`}>
-                        <button className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-blue-600">
+                        <button className="text-blue-500 px-4 py-2 rounded-md shadow-md hover:text-blue-600 text-lg">
                           <TbFileText />
                         </button>
                       </Link>
@@ -82,7 +91,7 @@ function AllFormsTable() {
 
                     <div className="relative group">
                       <button
-                        className="bg-red-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-red-600"
+                        className="text-red-500  px-4 py-2 rounded-md shadow-md hover:text-red-600 text-lg"
                         onClick={() => handleDelete(form._id)}
                       >
                         <MdDeleteOutline />
@@ -90,6 +99,20 @@ function AllFormsTable() {
                       <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block opacity-0 group-hover:opacity-100 transition duration-300 delay-200">
                         <div className="bg-black text-white text-xs rounded py-1 px-2 shadow-lg">
                           Delete
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="relative group">
+                      <button
+                        className="text-green-500  px-4 py-2 rounded-md shadow-md hover:text-green-600 text-lg"
+                        onClick={() => handleDelete(form._id)}
+                      >
+                        <GrAnalytics />
+                      </button>
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block opacity-0 group-hover:opacity-100 transition duration-300 delay-200">
+                        <div className="bg-black text-white text-xs rounded py-1 px-2 shadow-lg">
+                          Analytics
                         </div>
                       </div>
                     </div>

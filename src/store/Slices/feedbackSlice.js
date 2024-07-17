@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axiosInstance from "../../utils/axiosInstance";
 
 const initialState = {
   feedbacks: [],
@@ -6,10 +7,23 @@ const initialState = {
   loading: false,
 };
 
-export const addFeedback = createAsyncThunk("addFeedback", async (details) => {
-  const response = await axiosInstance.post(`/response/:${formId}`, details);
-  return response.data;
-});
+export const addFeedback = createAsyncThunk(
+  "addFeedback",
+  async ({ formId, responses }) => {
+    console.log(formId, responses);
+    try {
+      const response = await axiosInstance.post(
+        `feedbacks/response/${formId}`,
+        {
+          responses: responses,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 
 const feedbackSlice = createSlice({
   name: "feedback",
@@ -22,8 +36,9 @@ const feedbackSlice = createSlice({
       })
       .addCase(addFeedback.fulfilled, (state, action) => {
         state.loading = false;
-        state.feedback = action.payload;
-        state.feedbacks = [...state.feedbacks, action.payload];
+      })
+      .addCase(addFeedback.rejected, (state) => {
+        state.loading = false;
       });
   },
 });

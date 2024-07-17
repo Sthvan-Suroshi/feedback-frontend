@@ -16,6 +16,8 @@ import FormTextArea from "./FormTextArea";
 import FormInput from "./FormInput";
 import FormBuilder from "../Pages/FormBuilder";
 import AllFormsTable from "./AllFormsTable";
+import ViewAllForms from "./ViewAllForms";
+import FeedbackForm from "./FeedbackForm";
 export {
   Home,
   ImageFeedback,
@@ -35,4 +37,6 @@ export {
   FormInput,
   FormBuilder,
   AllFormsTable,
+  ViewAllForms,
+  FeedbackForm,
 };

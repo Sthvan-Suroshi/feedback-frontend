@@ -11,6 +11,8 @@ import {
   ViewImageDetails,
   FormBuilder,
   AllFormsTable,
+  ViewAllForms,
+  FeedbackForm,
 } from "./components";
 import Auth from "./components/Auth";
 import { useDispatch } from "react-redux";
@@ -31,6 +33,14 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/feedback/:id" element={<ViewImageDetails />} />
         <Route path="/form/:id" element={<ViewFormDetails />} />
+        <Route
+          path="/fill-form/:id"
+          element={
+            <Auth authentication={true} allowedRoles={["student"]}>
+              <FeedbackForm />
+            </Auth>
+          }
+        />
 
         <Route path="" element={<Layout />}>
           <Route path="/" element={<Home />} />
@@ -78,6 +88,15 @@ function App() {
             element={
               <Auth authentication={true} allowedRoles={["instructor"]}>
                 <AllFormsTable />
+              </Auth>
+            }
+          />
+
+          <Route
+            path="/view-forms"
+            element={
+              <Auth authentication={true} allowedRoles={["student"]}>
+                <ViewAllForms />
               </Auth>
             }
           />

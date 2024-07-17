@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { getCurrentUser, registerUser } from "../../store/Slices/authSlice.js";
+import toast from "react-hot-toast";
 
 function Signup() {
   const {
@@ -18,7 +19,7 @@ function Signup() {
     const res = await dispatch(registerUser(details));
     if (res.type === "registerUser/fulfilled") {
       toast.success("Registered successfully");
-      navigate("/upload-feedback");
+      navigate("/signin");
     }
     await dispatch(getCurrentUser());
   };
@@ -71,9 +72,9 @@ function Signup() {
               placeholder=""
               type="text"
               required
-              {...register("usn", { required: true })}
+              {...register("college_id", { required: true })}
             />
-            <label>USN</label>
+            <label>USN/INST_ID</label>
           </div>
 
           <div className="incont border-4 rounded-lg">

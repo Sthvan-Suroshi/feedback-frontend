@@ -23,9 +23,9 @@ const Sidebar = () => {
       roles: ["student"],
     },
     {
-      name: "Fill Form",
+      name: "View Form",
       icon: <FaWpforms />,
-      path: "/fill-form",
+      path: "/view-forms",
       roles: ["student"],
     },
     {

@@ -89,7 +89,11 @@ export const getAllImageResponses = createAsyncThunk(
 const imageFeedbackSlice = createSlice({
   name: "imageFeedback",
   initialState,
-  reducers: {},
+  reducers: {
+    resetImageFeedback: (state) => {
+      state.feedback = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(addImageFeedback.pending, (state) => {
@@ -150,6 +154,8 @@ const imageFeedbackSlice = createSlice({
       });
   },
 });
+
+export const { resetImageFeedback } = imageFeedbackSlice.actions;
 
 export const { actions, reducer } = imageFeedbackSlice;
 
