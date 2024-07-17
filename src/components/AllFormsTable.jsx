@@ -9,9 +9,9 @@ import { Link } from "react-router-dom";
 import { TbFileText } from "react-icons/tb";
 import { MdDeleteOutline } from "react-icons/md";
 import { Loader } from "./index";
-import toast from "react-hot-toast";
 import { formatDate } from "../utils/formatDate.js";
 import { GrAnalytics } from "react-icons/gr";
+import toast from "react-hot-toast";
 
 function AllFormsTable() {
   const dispatch = useDispatch();
@@ -104,12 +104,12 @@ function AllFormsTable() {
                     </div>
 
                     <div className="relative group">
-                      <button
-                        className="text-green-500  px-4 py-2 rounded-md shadow-md hover:text-green-600 text-lg"
-                        onClick={() => handleDelete(form._id)}
+                      <Link
+                        className="text-green-500 inline-block px-4 py-2 rounded-md shadow-md hover:text-green-600 text-lg"
+                        to={`/analytics/${btoa(form._id)}`}
                       >
                         <GrAnalytics />
-                      </button>
+                      </Link>
                       <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block opacity-0 group-hover:opacity-100 transition duration-300 delay-200">
                         <div className="bg-black text-white text-xs rounded py-1 px-2 shadow-lg">
                           Analytics

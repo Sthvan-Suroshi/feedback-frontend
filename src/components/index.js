@@ -18,6 +18,7 @@ import FormBuilder from "../Pages/FormBuilder";
 import AllFormsTable from "./AllFormsTable";
 import ViewAllForms from "./ViewAllForms";
 import FeedbackForm from "./FeedbackForm";
+import FormAnalytics from "./FormAnalytics";
 export {
   Home,
   ImageFeedback,
@@ -39,4 +40,5 @@ export {
   AllFormsTable,
   ViewAllForms,
   FeedbackForm,
+  FormAnalytics,
 };

@@ -5,12 +5,12 @@ const initialState = {
   feedbacks: [],
   feedback: null,
   loading: false,
+  exists: false,
 };
 
 export const addFeedback = createAsyncThunk(
   "addFeedback",
   async ({ formId, responses }) => {
-    console.log(formId, responses);
     try {
       const response = await axiosInstance.post(
         `feedbacks/response/${formId}`,
@@ -22,6 +22,29 @@ export const addFeedback = createAsyncThunk(
     } catch (error) {
       console.log(error);
     }
+  }
+);
+
+export const getAllFeedbacksToForm = createAsyncThunk(
+  "getAllFeedbacksToForm",
+  async (formId) => {
+    try {
+      const response = await axiosInstance.get(
+        `feedbacks/all/response/${formId}`
+      );
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const checkFeedbackSubmission = createAsyncThunk(
+  "checkFeedbackSubmission",
+  async (formId) => {
+    const response = await axiosInstance.get(`feedbacks/exists/${formId}`);
+
+    return response.data.data.submitted;
   }
 );
 
@@ -39,6 +62,28 @@ const feedbackSlice = createSlice({
       })
       .addCase(addFeedback.rejected, (state) => {
         state.loading = false;
+      });
+
+    builder
+      .addCase(getAllFeedbacksToForm.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllFeedbacksToForm.fulfilled, (state, action) => {
+        state.loading = false;
+        state.feedback = action.payload;
+        console.log(state.feedback);
+      })
+      .addCase(getAllFeedbacksToForm.rejected, (state) => {
+        state.loading = false;
+      });
+
+    builder
+      .addCase(checkFeedbackSubmission.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(checkFeedbackSubmission.fulfilled, (state, action) => {
+        state.loading = false;
+        state.exists = action.payload;
       });
   },
 });

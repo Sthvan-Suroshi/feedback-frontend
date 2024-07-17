@@ -10,7 +10,6 @@ function ViewAllForms() {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.form.loading);
   const forms = useSelector((state) => state.form.forms);
-  console.log(forms);
   useEffect(() => {
     dispatch(getFormByDept());
   }, [dispatch]);
@@ -40,15 +39,14 @@ function ViewAllForms() {
               <p className=" font-semibold">{form.title}</p>
               <p>{formatDate(form.createdAt)}</p>
               <p>created by: {form.createdBy}</p>
-              <p>
-                {form.submitted ? (
-                  <p className="text-green-500 font-semibold ">Submitted</p>
-                ) : (
-                  <>
-                    <Link to={`/fill-form/${btoa(form._id)}`}>View Form</Link>
-                  </>
-                )}
-              </p>
+
+              {form.submitted ? (
+                <p className="text-green-500 font-semibold ">Submitted</p>
+              ) : (
+                <>
+                  <Link to={`/fill-form/${btoa(form._id)}`}>View Form</Link>
+                </>
+              )}
             </div>
           </div>
         ))}

@@ -1,11 +1,15 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFormDetails } from "../store/Slices/formSlice";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import Loader from "./Loader";
 import { IoIosArrowBack } from "react-icons/io";
-import { addFeedback } from "../store/Slices/feedbackSlice";
+import {
+  addFeedback,
+  checkFeedbackSubmission,
+} from "../store/Slices/feedbackSlice.js";
+import toast from "react-hot-toast";
 
 const FeedbackForm = () => {
   const { id } = useParams();
@@ -14,6 +18,7 @@ const FeedbackForm = () => {
   const dispatch = useDispatch();
   const formData = useSelector((state) => state.form.form);
   const loading = useSelector((state) => state.form.loading);
+
   const {
     handleSubmit,
     control,
@@ -24,6 +29,7 @@ const FeedbackForm = () => {
 
   useEffect(() => {
     dispatch(getFormDetails(formId));
+    dispatch(checkFeedbackSubmission(formId));
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -34,25 +40,16 @@ const FeedbackForm = () => {
     }
   }, [formData, setValue]);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const responses = formData.questions.map((question) => ({
       questionID: question._id,
       responseText: data[question._id],
     }));
 
-    console.log(responses);
-    const res = dispatch(addFeedback({ formId, responses }));
-
+    const res = await dispatch(addFeedback({ formId, responses }));
     if (res.type === "addFeedback/fulfilled") {
       toast.success("Feedback added successfully");
-      reset({
-        responses: "",
-      });
-
-      setValue("responses", null);
       navigate("/view-forms");
-    } else {
-      toast.error("Couldn't add feedback");
     }
   };
 

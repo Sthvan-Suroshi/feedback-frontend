@@ -13,6 +13,7 @@ import {
   AllFormsTable,
   ViewAllForms,
   FeedbackForm,
+  FormAnalytics,
 } from "./components";
 import Auth from "./components/Auth";
 import { useDispatch } from "react-redux";
@@ -33,6 +34,7 @@ function App() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/feedback/:id" element={<ViewImageDetails />} />
         <Route path="/form/:id" element={<ViewFormDetails />} />
+        <Route path="/analytics/:id" element={<FormAnalytics />} />
         <Route
           path="/fill-form/:id"
           element={
