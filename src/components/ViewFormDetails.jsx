@@ -129,7 +129,7 @@ function ViewFormDetails() {
   const { title, description, questions } = form;
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-6 max-w-xl mx-auto my-4">
+    <div className="bg-white shadow-md rounded-lg p-6 max-w-xl min-w-[470px] mx-auto my-4">
       <Link
         to={accountType === "admin" ? "/admin/view-forms" : "/your-forms"}
         className="flex items-center"

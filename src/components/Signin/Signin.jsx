@@ -9,13 +9,23 @@ function Signin() {
   const navigate = useNavigate();
   const { handleSubmit, register } = useForm();
   const dispatch = useDispatch();
-
   const login = async (details) => {
     const res = await dispatch(loginUser(details));
-
+    console.log(res);
+    console.log(res.payload.accountType);
     if ((res.type = "loginUser/fulfilled")) {
       toast.success("Logged in successfully");
-      navigate("/");
+      if (res.payload.accountType === "admin") {
+        navigate("/all-images");
+      }
+
+      if (res.payload.accountType === "instructor") {
+        navigate("/create-form");
+      }
+
+      if (res.payload.accountType === "student") {
+        navigate("/upload-feedback");
+      }
     }
   };
   return (

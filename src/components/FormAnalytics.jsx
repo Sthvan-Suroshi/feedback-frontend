@@ -28,15 +28,15 @@ const FormAnalytics = () => {
 
   if (!data) {
     return (
-      <div className="max-w-xl mx-auto p-4 bg-white shadow-lg rounded-md mt-8">
-        <p className="text-2xl ">No eedbacks yet!</p>
+      <div className="max-w-xl mx-auto p-4 bg-white shadow-lg rounded-md mt-8 min-w-96 h-fit">
+        <p className="text-2xl text-center">No feedbacks yet!</p>
       </div>
     );
   }
 
   return (
-    <div>
-      <div className="max-w-xl mx-auto p-4 bg-white shadow-lg rounded-md mt-8">
+    <div className="mx-auto ">
+      <div className="max-w-xl mx-auto p-4 min-w-[450px] bg-white shadow-lg rounded-md mt-8">
         <Link
           to={accountType === "admin" ? "/admin/view-forms" : "/your-forms"}
           className="flex items-center"

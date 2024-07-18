@@ -44,7 +44,12 @@ function ViewAllForms() {
                 <p className="text-green-500 font-semibold ">Submitted</p>
               ) : (
                 <>
-                  <Link to={`/fill-form/${btoa(form._id)}`}>View Form</Link>
+                  <Link
+                    to={`/fill-form/${btoa(form._id)}`}
+                    className="font-semibold text-blue-500"
+                  >
+                    View Form
+                  </Link>
                 </>
               )}
             </div>

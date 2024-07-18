@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Outlet } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./components/Home";
 import {
@@ -29,118 +29,68 @@ function App() {
   useEffect(() => {
     dispatch(getCurrentUser());
   }, [dispatch]);
+
   return (
     <div className="">
       <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
+
+        {/* Admin Routes */}
         <Route
-          path="/feedback/:id"
           element={
             <Auth authentication={true} allowedRoles={["admin"]}>
-              <ViewImageDetails />
+              <Layout />
             </Auth>
           }
-        />
+        >
+          <Route path="/feedback/:id" element={<ViewImageDetails />} />
+          <Route path="/all-images" element={<AllImageResponse />} />
+          <Route path="/admin/view-forms" element={<AdminViewForms />} />
+          <Route path="/add-admin" element={<CreateAdmin />} />
+        </Route>
+
+        {/* Admin and Instructor Routes */}
         <Route
-          path="/form/:id"
           element={
             <Auth authentication={true} allowedRoles={["admin", "instructor"]}>
-              <ViewFormDetails />
+              <Layout />
             </Auth>
           }
-        />
+        >
+          <Route path="/form/:id" element={<ViewFormDetails />} />
+          <Route path="/analytics/:id" element={<FormAnalytics />} />
+          <Route path="/create-form" element={<FormBuilder />} />
+          <Route path="/your-forms" element={<AllFormsTable />} />
+        </Route>
+
+        {/* Student Routes */}
         <Route
-          path="/analytics/:id"
-          element={
-            <Auth authentication={true} allowedRoles={["admin", "instructor"]}>
-              <FormAnalytics />
-            </Auth>
-          }
-        />
-        <Route
-          path="/fill-form/:id"
           element={
             <Auth authentication={true} allowedRoles={["student"]}>
-              <FeedbackForm />
+              <Layout />
             </Auth>
           }
-        />
+        >
+          <Route path="/fill-form/:id" element={<FeedbackForm />} />
+          <Route path="/upload-feedback" element={<ImageFeedback />} />
+          <Route path="/view-forms" element={<ViewAllForms />} />
+        </Route>
 
-        <Route path="" element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/upload-feedback"
-            element={
-              <Auth authentication={true} allowedRoles={["student"]}>
-                <ImageFeedback />
-              </Auth>
-            }
-          />
-
-          <Route
-            path="/view-responses"
-            element={
-              <Auth
-                authentication={true}
-                allowedRoles={["instructor", "student"]}
-              >
-                <ImageResponseView />
-              </Auth>
-            }
-          />
-
-          <Route
-            path="/all-images"
-            element={
-              <Auth authentication={true} allowedRoles={["admin"]}>
-                <AllImageResponse />
-              </Auth>
-            }
-          />
-
-          <Route
-            path="/create-form"
-            element={
-              <Auth authentication={true} allowedRoles={["instructor"]}>
-                <FormBuilder />
-              </Auth>
-            }
-          />
-
-          <Route
-            path="/your-forms"
-            element={
-              <Auth authentication={true} allowedRoles={["instructor"]}>
-                <AllFormsTable />
-              </Auth>
-            }
-          />
-
-          <Route
-            path="/view-forms"
-            element={
-              <Auth authentication={true} allowedRoles={["student"]}>
-                <ViewAllForms />
-              </Auth>
-            }
-          />
-          <Route
-            path="/admin/view-forms"
-            element={
-              <Auth authentication={true} allowedRoles={["admin"]}>
-                <AdminViewForms />
-              </Auth>
-            }
-          />
-          <Route
-            path="/add-admin"
-            element={
-              <Auth authentication={true} allowedRoles={["admin"]}>
-                <CreateAdmin />
-              </Auth>
-            }
-          />
+        {/* Instructor and Student Routes */}
+        <Route
+          element={
+            <Auth
+              authentication={true}
+              allowedRoles={["instructor", "student"]}
+            >
+              <Layout />
+            </Auth>
+          }
+        >
+          <Route path="/view-responses" element={<ImageResponseView />} />
         </Route>
       </Routes>
       <Toaster position="top-center" reverseOrder={false} />
