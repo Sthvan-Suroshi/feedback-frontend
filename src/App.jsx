@@ -36,7 +36,41 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
+        <Route
+          path="/form/:id"
+          element={
+            <Auth authentication={true} allowedRoles={["instructor", "admin"]}>
+              <ViewFormDetails />
+            </Auth>
+          }
+        />
 
+        <Route
+          path="/feedback/:id"
+          element={
+            <Auth authentication={true} allowedRoles={["admin"]}>
+              <ViewImageDetails />
+            </Auth>
+          }
+        />
+
+        <Route
+          path="/analytics/:id"
+          element={
+            <Auth authentication={true} allowedRoles={["admin", "instructor"]}>
+              <FormAnalytics />
+            </Auth>
+          }
+        />
+
+        <Route
+          path="/fill-form/:id"
+          element={
+            <Auth authentication={true} allowedRoles={["student"]}>
+              <FeedbackForm />
+            </Auth>
+          }
+        />
         <Route
           element={
             <Auth authentication={true} allowedRoles={["admin"]}>
@@ -44,7 +78,6 @@ function App() {
             </Auth>
           }
         >
-          <Route path="/feedback/:id" element={<ViewImageDetails />} />
           <Route path="/all-images" element={<AllImageResponse />} />
           <Route path="/admin/view-forms" element={<AdminViewForms />} />
           <Route path="/add-admin" element={<CreateAdmin />} />
@@ -57,8 +90,6 @@ function App() {
             </Auth>
           }
         >
-          <Route path="/form/:id" element={<ViewFormDetails />} />
-          <Route path="/analytics/:id" element={<FormAnalytics />} />
           <Route path="/create-form" element={<FormBuilder />} />
           <Route path="/your-forms" element={<AllFormsTable />} />
         </Route>
@@ -70,17 +101,13 @@ function App() {
             </Auth>
           }
         >
-          <Route path="/fill-form/:id" element={<FeedbackForm />} />
           <Route path="/upload-feedback" element={<ImageFeedback />} />
           <Route path="/view-forms" element={<ViewAllForms />} />
         </Route>
 
         <Route
           element={
-            <Auth
-              authentication={true}
-              allowedRoles={["instructor", "student"]}
-            >
+            <Auth authentication={true} allowedRoles={["student"]}>
               <Layout />
             </Auth>
           }

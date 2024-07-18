@@ -1,18 +1,18 @@
 import { useNavigate, Link } from "react-router-dom";
 import "./Signin.css";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../store/Slices/authSlice";
 import toast from "react-hot-toast";
-
+import Loader from "../Loader";
 function Signin() {
   const navigate = useNavigate();
   const { handleSubmit, register } = useForm();
   const dispatch = useDispatch();
+  const loading = useSelector((state) => state.auth.loading);
+
   const login = async (details) => {
     const res = await dispatch(loginUser(details));
-    console.log(res);
-    console.log(res.payload.accountType);
     if ((res.type = "loginUser/fulfilled")) {
       toast.success("Logged in successfully");
       if (res.payload.accountType === "admin") {
@@ -60,7 +60,15 @@ function Signin() {
             <label>Password</label>
           </div>
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">
+          {loading ? (
+            <div className=" flex items-center justify-center">
+              <Loader />
+            </div>
+          ) : (
+            "Signin"
+          )}
+        </button>
         <span>
           Don&apos;t have an account?&nbsp;<Link to={"/signup"}>Signup</Link>
         </span>

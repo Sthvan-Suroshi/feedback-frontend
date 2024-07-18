@@ -1,9 +1,10 @@
 import "./Signup.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser, registerUser } from "../../store/Slices/authSlice.js";
 import toast from "react-hot-toast";
+import Loader from "../Loader.jsx";
 
 function Signup() {
   const {
@@ -14,7 +15,7 @@ function Signup() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const loading = useSelector((state) => state.auth.loading);
   const submit = async (details) => {
     const res = await dispatch(registerUser(details));
     if (res.type === "registerUser/fulfilled") {
@@ -113,7 +114,15 @@ function Signup() {
           </div>
         </div>
 
-        <button type="submit">Signup</button>
+        <button type="submit">
+          {loading ? (
+            <div className=" flex items-center justify-center">
+              <Loader />
+            </div>
+          ) : (
+            "Signup"
+          )}
+        </button>
         <span>
           Already have an account?&nbsp;<Link to={"/signin"}>Signin</Link>
         </span>
