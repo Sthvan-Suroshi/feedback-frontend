@@ -33,12 +33,10 @@ function App() {
   return (
     <div className="">
       <Routes>
-        {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
 
-        {/* Admin Routes */}
         <Route
           element={
             <Auth authentication={true} allowedRoles={["admin"]}>
@@ -52,7 +50,6 @@ function App() {
           <Route path="/add-admin" element={<CreateAdmin />} />
         </Route>
 
-        {/* Admin and Instructor Routes */}
         <Route
           element={
             <Auth authentication={true} allowedRoles={["admin", "instructor"]}>
@@ -66,7 +63,6 @@ function App() {
           <Route path="/your-forms" element={<AllFormsTable />} />
         </Route>
 
-        {/* Student Routes */}
         <Route
           element={
             <Auth authentication={true} allowedRoles={["student"]}>
@@ -79,7 +75,6 @@ function App() {
           <Route path="/view-forms" element={<ViewAllForms />} />
         </Route>
 
-        {/* Instructor and Student Routes */}
         <Route
           element={
             <Auth
