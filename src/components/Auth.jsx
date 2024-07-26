@@ -15,14 +15,14 @@ function Auth({ children, authentication, allowedRoles }) {
       return;
     }
 
-    if (!allowedRoles.includes(accountType)) {
+    if (authStatus && !allowedRoles.includes(accountType)) {
       toast.error("You lost your way!");
       navigate("/");
     }
   }, [authStatus, authentication, navigate]);
 
   if (authentication && authStatus !== authentication) {
-    return <LoginPopup />;
+    navigate("/");
   }
 
   return children;

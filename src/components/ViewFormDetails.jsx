@@ -96,7 +96,7 @@ function ViewFormDetails() {
     setEditedOptions((prev) => ({
       ...prev,
       [questionId]: prev[questionId].map((option, index) =>
-        index === optionIndex ? value : option
+        index === optionIndex ? value : option,
       ),
     }));
   };
@@ -192,7 +192,7 @@ function ViewFormDetails() {
                       }
                     />
                   )}
-                  <div>
+                  <div className="min-w-28">
                     {!editQuestionMode.includes(question._id) ? (
                       <button
                         className="text-blue-500 font-semibold mr-2"
@@ -212,7 +212,7 @@ function ViewFormDetails() {
                           className="text-gray-500 font-semibold mr-2"
                           onClick={() =>
                             setEditQuestionMode((prev) =>
-                              prev.filter((id) => id !== question._id)
+                              prev.filter((id) => id !== question._id),
                             )
                           }
                         >
@@ -240,11 +240,7 @@ function ViewFormDetails() {
                 </div>
                 {!editQuestionMode.includes(question._id) ? (
                   question.description ? (
-                    <textarea
-                      className="border rounded py-1 px-2 w-full"
-                      placeholder="Enter your answer here"
-                      disabled
-                    />
+                    <></>
                   ) : (
                     <ul className="list-inside list-decimal">
                       {question.options.map((option, index) => (
@@ -275,7 +271,7 @@ function ViewFormDetails() {
                             handleOptionChange(
                               question._id,
                               index,
-                              e.target.value
+                              e.target.value,
                             )
                           }
                         />

@@ -10,7 +10,7 @@ function Signin() {
   const { handleSubmit, register } = useForm();
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.auth.loading);
-
+  const accountType = useSelector((state) => state.auth.accountType);
   const login = async (details) => {
     const res = await dispatch(loginUser(details));
     if ((res.type = "loginUser/fulfilled")) {
@@ -62,7 +62,7 @@ function Signin() {
         </div>
         <button type="submit">
           {loading ? (
-            <div className=" flex items-center justify-center">
+            <div className=" w-full h-full flex items-center justify-center">
               <Loader />
             </div>
           ) : (

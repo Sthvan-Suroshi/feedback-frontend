@@ -6,18 +6,17 @@ import {
   QuestionsList,
   OptionsList,
   FormCheckbox,
-  FormTextArea,
   FormInput,
 } from "../components/index";
 import toast from "react-hot-toast";
 
-const FormBuilder = () => {
+const FormBuilder = ({ title, description }) => {
   const dispatch = useDispatch();
 
   const { control, handleSubmit, reset, setValue, watch } = useForm({
     defaultValues: {
-      title: "",
-      description: "",
+      // title: "",
+      // description: "",
       question: "",
       options: [{ value: "" }],
       useDescription: false,
@@ -39,9 +38,12 @@ const FormBuilder = () => {
         toast.error("Please add atleast one question");
         return;
       }
+
       const formData = {
-        title: data.title,
-        description: data.description,
+        // title: data.title,
+        title,
+        // description: data.description,
+        description,
         questions,
       };
 
@@ -58,7 +60,7 @@ const FormBuilder = () => {
         setQuestions([]);
       }
     },
-    [questions, dispatch, reset]
+    [questions, dispatch, reset],
   );
 
   const handleAddQuestion = useCallback(
@@ -96,7 +98,7 @@ const FormBuilder = () => {
         useDescription: false,
       });
     },
-    [editIndex, questions, reset]
+    [editIndex, questions, reset],
   );
 
   const handleEditQuestion = useCallback(
@@ -107,12 +109,12 @@ const FormBuilder = () => {
         "options",
         questionToEdit.options
           ? questionToEdit.options.map((opt) => ({ value: opt }))
-          : [{ value: "" }]
+          : [{ value: "" }],
       );
       setValue("useDescription", !!questionToEdit.description);
       setEditIndex(index);
     },
-    [questions, setValue]
+    [questions, setValue],
   );
 
   const handleDeleteQuestion = useCallback(
@@ -120,19 +122,20 @@ const FormBuilder = () => {
       const updatedQuestions = questions.filter((_, i) => i !== index);
       setQuestions(updatedQuestions);
     },
-    [questions]
+    [questions],
   );
 
   return (
     <div className="mx-auto p-4 flex gap-40">
       <form onSubmit={handleSubmit(onSubmit)} className="w-96">
-        <h2 className="text-2xl font-bold mb-4">Create Feedback Form</h2>
-        <FormInput label="Form Title" name="title" control={control} />
+        {/* <FormInput label="Form Title" name="title" control={control} />
         <FormTextArea
           label="Form Description"
           name="description"
           control={control}
-        />
+        /> */}
+
+        <h1 className="font-semibold">Title: {title}</h1>
         <FormInput label="Question" name="question" control={control} />
         <FormCheckbox
           label="Use Description"

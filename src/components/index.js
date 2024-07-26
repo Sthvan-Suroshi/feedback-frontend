@@ -22,6 +22,7 @@ import FormAnalytics from "./FormAnalytics";
 import AdminViewForms from "./AdminViewForms";
 import ViewFormDetails from "./ViewFormDetails";
 import CreateAdmin from "./Signup/CreateAdmin";
+import CreateForm from "../Pages/CreateForm";
 export {
   Home,
   ImageFeedback,
@@ -47,4 +48,5 @@ export {
   AdminViewForms,
   ViewFormDetails,
   CreateAdmin,
+  CreateForm,
 };

@@ -14,7 +14,7 @@ function Navbar() {
   };
   return (
     <div className="text-black border-x-0 border bg-slate-100 flex px-10 py-4 justify-between items-center sticky top-0 z-[999] shadow-lg">
-      <div className="font-bold cursor-pointer" onClick={() => navigate("/")}>
+      <div className="font-bold hover:transform hover:scale-105 cursor-pointer ease-in-out duration-300">
         Feedback Portal
       </div>
 
