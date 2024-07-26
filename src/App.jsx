@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Routes, Outlet } from "react-router-dom";
+import { Route, Routes, Outlet, useNavigate } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./components/Home";
 import {
@@ -9,7 +9,6 @@ import {
   ImageResponseView,
   AllImageResponse,
   ViewImageDetails,
-  FormBuilder,
   AllFormsTable,
   ViewAllForms,
   FeedbackForm,
@@ -17,6 +16,7 @@ import {
   AdminViewForms,
   ViewFormDetails,
   CreateAdmin,
+  CreateForm,
 } from "./components";
 import Auth from "./components/Auth";
 import { useDispatch } from "react-redux";
@@ -90,7 +90,7 @@ function App() {
             </Auth>
           }
         >
-          <Route path="/create-form" element={<FormBuilder />} />
+          <Route path="/create-form" element={<CreateForm />} />
           <Route path="/your-forms" element={<AllFormsTable />} />
         </Route>
 
