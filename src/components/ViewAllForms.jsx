@@ -22,6 +22,16 @@ function ViewAllForms() {
     );
   }
 
+  if (forms.length === 0) {
+    return (
+      <>
+        <div className="flex items-start justify-center w-screen mt-10">
+          <p className="text-3xl">No Forms Found</p>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <div className="w-screen flex flex-col gap-3 ">

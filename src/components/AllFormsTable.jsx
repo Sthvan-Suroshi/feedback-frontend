@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteForm,
@@ -8,7 +8,7 @@ import {
 import { Link } from "react-router-dom";
 import { TbFileText } from "react-icons/tb";
 import { MdDeleteOutline } from "react-icons/md";
-import { Loader } from "./index";
+import { Loader, TogglePublish } from "./index";
 import { formatDate } from "../utils/formatDate.js";
 import { GrAnalytics } from "react-icons/gr";
 import toast from "react-hot-toast";
@@ -115,6 +115,13 @@ function AllFormsTable() {
                           Analytics
                         </div>
                       </div>
+                    </div>
+
+                    <div>
+                      <TogglePublish
+                        formId={form._id}
+                        isPublished={form.isPublished}
+                      />
                     </div>
                   </td>
                 </tr>

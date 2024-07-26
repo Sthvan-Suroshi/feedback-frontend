@@ -14,7 +14,6 @@ import OptionsList from "./OptionList";
 import FormCheckbox from "./FormCheckBox";
 import FormTextArea from "./FormTextArea";
 import FormInput from "./FormInput";
-import FormBuilder from "../Pages/FormBuilder";
 import AllFormsTable from "./AllFormsTable";
 import ViewAllForms from "./ViewAllForms";
 import FeedbackForm from "./FeedbackForm";
@@ -23,6 +22,8 @@ import AdminViewForms from "./AdminViewForms";
 import ViewFormDetails from "./ViewFormDetails";
 import CreateAdmin from "./Signup/CreateAdmin";
 import CreateForm from "../Pages/CreateForm";
+import FormBuilder from "./FormBuilder";
+import TogglePublish from "./TogglePublish";
 export {
   Home,
   ImageFeedback,
@@ -40,13 +41,14 @@ export {
   FormCheckbox,
   FormTextArea,
   FormInput,
-  FormBuilder,
   AllFormsTable,
   ViewAllForms,
   FeedbackForm,
+  FormBuilder,
   FormAnalytics,
   AdminViewForms,
   ViewFormDetails,
   CreateAdmin,
   CreateForm,
+  TogglePublish,
 };

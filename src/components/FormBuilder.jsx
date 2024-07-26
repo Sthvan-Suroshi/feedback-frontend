@@ -7,7 +7,7 @@ import {
   OptionsList,
   FormCheckbox,
   FormInput,
-} from "../components/index";
+} from "./index";
 import toast from "react-hot-toast";
 
 const FormBuilder = ({ title, description }) => {
