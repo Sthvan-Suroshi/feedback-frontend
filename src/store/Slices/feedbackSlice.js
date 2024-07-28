@@ -71,7 +71,6 @@ const feedbackSlice = createSlice({
       .addCase(getAllFeedbacksToForm.fulfilled, (state, action) => {
         state.loading = false;
         state.feedback = action.payload;
-        console.log(state.feedback);
       })
       .addCase(getAllFeedbacksToForm.rejected, (state) => {
         state.loading = false;
