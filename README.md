@@ -55,4 +55,50 @@ The Feedback Website is designed for an educational institute to facilitate anon
 
 ## Preview
 
+**Homepage:** Landing page of the application.
 ![homepage](./public/homepage.png)
+
+**Signup Page:** Page to sign up new user for the application.
+![signup](./public/signup.png)
+
+**Signin Page:** Page to sign in existing user for the application.
+![signin](./public/signin.png)
+
+## Instructor Interface
+
+**Form creation page:** Page to create new form for feedback.
+![form](./public/form_creation.png)
+
+**Add questions page:** Page to add questions to the form.
+![add_questions](./public/add_question.png)
+
+**View Forms page:** Page to view all forms created by the instructor of specific department.
+![view_forms](./public/instructor_forms.png)
+
+**Form Analytics page:** Page to view analytics of specific form.
+![view_analytics](./public/form_analytics.png)
+
+## Student Interface
+
+**Add Image Feedback**: Page to add image feedback.
+![image_feedback](./public/image_feedback.png)
+
+**View All image feedback**: Page to view, edit, delete all image feedback submitted by students .
+![view_image_feedback](./public/all_user_imagefeedback.png)
+
+**Forms Table page:** Page to view all forms of specific department.
+![forms_table](./public/dept_forms.png)
+
+**Fill Feedback Form page:** Page to fill feedback form.
+![feedback_form](./public/filling_form.png)
+
+## Admin Interface
+
+**View Imagefeedback page:** Page to view all forms and image feedback across departments.
+![all image feedback](./public/all_student_imagefb.png)
+
+**All Forms page:** Page to view all forms created by the all the instructors of all department.
+![all_forms](./public/all_forms.png)
+
+**Create Admins page:** Page to create new admin accounts.
+![create_admins](./public/admin_creation.png)
