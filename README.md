@@ -55,4 +55,4 @@ The Feedback Website is designed for an educational institute to facilitate anon
 
 ## Preview
 
-![homepage]('./public/homepage.png')
+![homepage](./public/homepage.png)
