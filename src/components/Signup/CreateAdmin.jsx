@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { getCurrentUser, registerUser } from "../../store/Slices/authSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 function CreateAdmin() {
   const {
     register,
