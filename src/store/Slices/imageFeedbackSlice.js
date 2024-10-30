@@ -4,7 +4,7 @@ import axiosInstance from "../../utils/axiosInstance";
 const initialState = {
   feedbacks: [],
   feedback: null,
-  loading: false,
+  loading: false
 };
 
 export const addImageFeedback = createAsyncThunk(
@@ -92,7 +92,7 @@ const imageFeedbackSlice = createSlice({
   reducers: {
     resetImageFeedback: (state) => {
       state.feedback = null;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -101,7 +101,6 @@ const imageFeedbackSlice = createSlice({
       })
       .addCase(addImageFeedback.fulfilled, (state, action) => {
         state.loading = false;
-
         state.feedbacks = action.payload;
       })
       .addCase(addImageFeedback.rejected, (state) => {
@@ -112,7 +111,7 @@ const imageFeedbackSlice = createSlice({
       .addCase(editImageFeedback.pending, (state) => {
         state.loading = true;
       })
-      .addCase(editImageFeedback.fulfilled, (state, action) => {
+      .addCase(editImageFeedback.fulfilled, (state) => {
         state.loading = false;
       })
       .addCase(editImageFeedback.rejected, (state) => {
@@ -152,7 +151,7 @@ const imageFeedbackSlice = createSlice({
         state.loading = false;
         state.feedbacks = action.payload;
       });
-  },
+  }
 });
 
 export const { resetImageFeedback } = imageFeedbackSlice.actions;

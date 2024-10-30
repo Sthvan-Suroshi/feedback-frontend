@@ -5,7 +5,7 @@ const initialState = {
   feedbacks: [],
   feedback: null,
   loading: false,
-  exists: false,
+  exists: false
 };
 
 export const addFeedback = createAsyncThunk(
@@ -15,7 +15,7 @@ export const addFeedback = createAsyncThunk(
       const response = await axiosInstance.post(
         `feedbacks/response/${formId}`,
         {
-          responses: responses,
+          responses: responses
         }
       );
       return response.data;
@@ -57,7 +57,7 @@ const feedbackSlice = createSlice({
       .addCase(addFeedback.pending, (state) => {
         state.loading = true;
       })
-      .addCase(addFeedback.fulfilled, (state, action) => {
+      .addCase(addFeedback.fulfilled, (state) => {
         state.loading = false;
       })
       .addCase(addFeedback.rejected, (state) => {
@@ -84,7 +84,7 @@ const feedbackSlice = createSlice({
         state.loading = false;
         state.exists = action.payload;
       });
-  },
+  }
 });
 
 export default feedbackSlice.reducer;

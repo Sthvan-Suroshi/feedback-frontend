@@ -1,4 +1,3 @@
-import React from "react";
 import GetImagePreview from "./GetImagePreview";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,7 +46,7 @@ function ImageFeedback() {
             placeholder="Enter feedback title"
             className=" border-2 bg-slate-200 py-1 focus:outline-none px-1 rounded-md"
             {...register("title", {
-              required: true,
+              required: true
             })}
           />
 
@@ -62,7 +61,7 @@ function ImageFeedback() {
             placeholder="Enter feedback description"
             className="border-2 bg-slate-200 py-1 px-1 focus:outline-none resize-none rounded-md"
             {...register("description", {
-              required: true,
+              required: true
             })}
           />
         </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import HomeImg from "../../src/assets/Images/home.png";
 import { useSelector } from "react-redux";
@@ -21,7 +21,7 @@ function Home() {
         navigate("/upload-feedback");
       }
     }
-  }, [status]);
+  }, [status, accountType, navigate]);
 
   return (
     <>

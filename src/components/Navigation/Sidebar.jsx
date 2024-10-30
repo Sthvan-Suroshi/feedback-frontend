@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
 import { GoUpload } from "react-icons/go";
 import { MdGridView } from "react-icons/md";
@@ -15,50 +14,50 @@ const Sidebar = () => {
       name: "Upload Feedback",
       icon: <GoUpload />,
       path: "/upload-feedback",
-      roles: ["student"],
+      roles: ["student"]
     },
     {
       name: "Your Feedbacks",
       icon: <MdGridView />,
       path: "/view-responses",
-      roles: ["student"],
+      roles: ["student"]
     },
     {
       name: "View Form",
       icon: <FaWpforms />,
       path: "/view-forms",
-      roles: ["student"],
+      roles: ["student"]
     },
     {
       name: "All Images",
       icon: <IoHomeOutline />,
       path: "/all-images",
-      roles: ["admin"],
+      roles: ["admin"]
     },
     {
       name: "Create Form",
       icon: <FaWpforms />,
       path: "/create-form",
-      roles: ["instructor"],
+      roles: ["instructor"]
     },
     {
       name: "Your Forms",
       icon: <FaWpforms />,
       path: "/your-forms",
-      roles: ["instructor"],
+      roles: ["instructor"]
     },
     {
       name: "All Forms",
       icon: <FaWpforms />,
       path: "/admin/view-forms",
-      roles: ["admin"],
+      roles: ["admin"]
     },
     {
       name: "Create Admin",
       icon: <FaRegUser />,
       path: "/add-admin",
-      roles: ["admin"],
-    },
+      roles: ["admin"]
+    }
   ];
 
   const filteredNavItems = navItems.filter((item) =>

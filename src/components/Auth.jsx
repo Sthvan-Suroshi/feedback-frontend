@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -18,7 +18,7 @@ function Auth({ children, authentication, allowedRoles }) {
       toast.error("You lost your way!");
       navigate("/");
     }
-  }, [authStatus, authentication, navigate]);
+  }, [authStatus, authentication, navigate, allowedRoles, accountType]);
 
   if (authentication && authStatus !== authentication) {
     navigate("/");

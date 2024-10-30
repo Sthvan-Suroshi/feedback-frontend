@@ -7,11 +7,7 @@ import toast from "react-hot-toast";
 import Loader from "../Loader.jsx";
 
 function Signup() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,7 +33,7 @@ function Signup() {
               type="text"
               required
               {...register("fullName", {
-                required: true,
+                required: true
               })}
             />
             <label>Full Name</label>
@@ -50,7 +46,7 @@ function Signup() {
               type="email"
               required
               {...register("email", {
-                required: true,
+                required: true
               })}
             />
             <label>Email</label>
@@ -86,7 +82,7 @@ function Signup() {
               required
               defaultValue="student"
               {...register("accountType", {
-                required: true,
+                required: true
               })}
             >
               <option value="student">Student (Default)</option>
@@ -101,7 +97,7 @@ function Signup() {
               id="department"
               required
               {...register("department", {
-                required: true,
+                required: true
               })}
             >
               <option>select</option>

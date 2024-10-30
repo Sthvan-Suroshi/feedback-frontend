@@ -1,4 +1,3 @@
-import React from "react";
 import "./Signup.css";
 import { useForm } from "react-hook-form";
 import { getCurrentUser, registerUser } from "../../store/Slices/authSlice";
@@ -6,11 +5,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 function CreateAdmin() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,7 +29,7 @@ function CreateAdmin() {
               type="text"
               required
               {...register("fullName", {
-                required: true,
+                required: true
               })}
             />
             <label>Full Name</label>
@@ -47,7 +42,7 @@ function CreateAdmin() {
               type="email"
               required
               {...register("email", {
-                required: true,
+                required: true
               })}
             />
             <label>Email</label>
@@ -84,7 +79,7 @@ function CreateAdmin() {
               defaultValue="admin"
               readOnly
               {...register("accountType", {
-                required: true,
+                required: true
               })}
             ></input>
           </div>
@@ -98,7 +93,7 @@ function CreateAdmin() {
               readOnly
               defaultValue="ALL"
               {...register("department", {
-                required: true,
+                required: true
               })}
             ></input>
           </div>

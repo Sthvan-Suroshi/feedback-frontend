@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getImageFeedback } from "../store/Slices/imageFeedbackSlice";
@@ -13,7 +13,7 @@ function ViewImageDetails() {
 
   useEffect(() => {
     dispatch(getImageFeedback(imgId));
-  }, [id]);
+  }, [id, dispatch, imgId]);
 
   const feedback = useSelector((state) => state.imageFeedback.feedback);
 

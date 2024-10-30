@@ -1,13 +1,8 @@
-import React, { useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { addForm } from "../store/Slices/formSlice";
-import {
-  QuestionsList,
-  OptionsList,
-  FormCheckbox,
-  FormInput,
-} from "./index";
+import { QuestionsList, OptionsList, FormCheckbox, FormInput } from "./index";
 import toast from "react-hot-toast";
 
 const FormBuilder = ({ title, description }) => {
@@ -19,49 +14,46 @@ const FormBuilder = ({ title, description }) => {
       // description: "",
       question: "",
       options: [{ value: "" }],
-      useDescription: false,
-    },
+      useDescription: false
+    }
   });
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "options",
+    name: "options"
   });
 
   const [questions, setQuestions] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const useDescription = watch("useDescription");
 
-  const onSubmit = useCallback(
-    async (data) => {
-      if (questions.length === 0) {
-        toast.error("Please add atleast one question");
-        return;
-      }
+  const onSubmit = useCallback(async () => {
+    if (questions.length === 0) {
+      toast.error("Please add atleast one question");
+      return;
+    }
 
-      const formData = {
-        // title: data.title,
-        title,
-        // description: data.description,
-        description,
-        questions,
-      };
+    const formData = {
+      // title: data.title,
+      title,
+      // description: data.description,
+      description,
+      questions
+    };
 
-      const res = await dispatch(addForm(formData));
-      if (res.type === "addForm/fulfilled") {
-        toast.success("Form added successfully");
-        reset({
-          title: "",
-          description: "",
-          question: "",
-          options: [{ value: "" }],
-          useDescription: false,
-        });
-        setQuestions([]);
-      }
-    },
-    [questions, dispatch, reset],
-  );
+    const res = await dispatch(addForm(formData));
+    if (res.type === "addForm/fulfilled") {
+      toast.success("Form added successfully");
+      reset({
+        title: "",
+        description: "",
+        question: "",
+        options: [{ value: "" }],
+        useDescription: false
+      });
+      setQuestions([]);
+    }
+  }, [questions, dispatch, reset, description, title]);
 
   const handleAddQuestion = useCallback(
     (data) => {
@@ -79,7 +71,7 @@ const FormBuilder = ({ title, description }) => {
           : data.options
               .map((opt) => opt.value)
               .filter((opt) => opt.trim() !== ""),
-        description: data.useDescription ? true : null,
+        description: data.useDescription ? true : null
       };
 
       if (editIndex !== null) {
@@ -95,10 +87,10 @@ const FormBuilder = ({ title, description }) => {
         ...data,
         question: "",
         options: [{ value: "" }],
-        useDescription: false,
+        useDescription: false
       });
     },
-    [editIndex, questions, reset],
+    [editIndex, questions, reset]
   );
 
   const handleEditQuestion = useCallback(
@@ -109,12 +101,12 @@ const FormBuilder = ({ title, description }) => {
         "options",
         questionToEdit.options
           ? questionToEdit.options.map((opt) => ({ value: opt }))
-          : [{ value: "" }],
+          : [{ value: "" }]
       );
       setValue("useDescription", !!questionToEdit.description);
       setEditIndex(index);
     },
-    [questions, setValue],
+    [questions, setValue]
   );
 
   const handleDeleteQuestion = useCallback(
@@ -122,7 +114,7 @@ const FormBuilder = ({ title, description }) => {
       const updatedQuestions = questions.filter((_, i) => i !== index);
       setQuestions(updatedQuestions);
     },
-    [questions],
+    [questions]
   );
 
   return (

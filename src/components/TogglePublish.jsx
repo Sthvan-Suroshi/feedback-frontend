@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { togglePublish } from "../store/Slices/formSlice.js";
 
@@ -9,7 +9,7 @@ function TogglePublish({ formId, isPublished }) {
   const togglePublishStatus = () => {
     const details = {
       formId,
-      isPublished: !isChecked,
+      isPublished: !isChecked
     };
 
     console.log(details);

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllImageResponses } from "../store/Slices/imageFeedbackSlice.js";
 import { Link } from "react-router-dom";
@@ -7,7 +7,7 @@ function AllImageResponse() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const res = dispatch(getAllImageResponses());
+    dispatch(getAllImageResponses());
   }, [dispatch]);
 
   const feedbacks = useSelector((state) => state.imageFeedback.feedbacks);

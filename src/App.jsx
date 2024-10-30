@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./components/Home";
@@ -22,6 +21,7 @@ import Auth from "./components/Auth";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "./store/Slices/authSlice";
 import { Toaster } from "react-hot-toast";
+import { useEffect } from "react";
 
 function App() {
   const dispatch = useDispatch();

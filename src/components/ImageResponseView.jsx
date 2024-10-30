@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteImageFeedback,
   getAllUserImageResponses,
-  resetImageFeedback,
+  resetImageFeedback
 } from "../store/Slices/imageFeedbackSlice";
 import { EditImageFeedback, Loader } from "./index";
 import toast from "react-hot-toast";

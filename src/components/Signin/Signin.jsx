@@ -1,7 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import "./Signin.css";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginUser } from "../../store/Slices/authSlice";
 import toast from "react-hot-toast";
 import { useState } from "react";

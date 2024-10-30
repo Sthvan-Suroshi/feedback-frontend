@@ -1,4 +1,3 @@
-import React from "react";
 
 function Loader({ h = "5" }) {
   return (

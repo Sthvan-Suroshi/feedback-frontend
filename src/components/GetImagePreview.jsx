@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Controller } from "react-hook-form";
 import { FaCamera } from "react-icons/fa";
 
@@ -10,7 +10,7 @@ function GetImagePreview({
   className,
   cameraIcon = false,
   cameraSize = 20,
-  image = undefined,
+  image = undefined
 }) {
   const [preview, setPreview] = useState(null);
 

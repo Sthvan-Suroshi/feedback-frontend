@@ -5,7 +5,7 @@ const initialState = {
   loading: false,
   forms: [],
   form: null,
-  isPublished: false,
+  isPublished: false
 };
 
 export const addForm = createAsyncThunk("addForm", async (details) => {
@@ -33,10 +33,10 @@ export const togglePublish = createAsyncThunk(
   async (details) => {
     const response = await axiosInstance.patch(
       `forms/your-forms/toggle-publish`,
-      details,
+      details
     );
     return response.data.data.isPublished;
-  },
+  }
 );
 
 export const getFormDetails = createAsyncThunk("getFormDetails", async (id) => {
@@ -58,7 +58,7 @@ export const deleteQuestion = createAsyncThunk(
     const response = await axiosInstance.delete(`forms/question/${questionId}`);
     console.log(response.data);
     return response.data;
-  },
+  }
 );
 
 export const updateQuestion = createAsyncThunk(
@@ -67,10 +67,10 @@ export const updateQuestion = createAsyncThunk(
     const { questionId } = details;
     const response = await axiosInstance.patch(
       `forms/question/${questionId}`,
-      details,
+      details
     );
     return response.data;
-  },
+  }
 );
 
 export const getAllForms = createAsyncThunk("getAllForms", async () => {
@@ -84,7 +84,7 @@ const formSlice = createSlice({
   reducers: {
     resetForm: (state) => {
       state.form = null;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -180,7 +180,7 @@ const formSlice = createSlice({
       .addCase(updateQuestion.pending, (state) => {
         state.loading = true;
       })
-      .addCase(updateQuestion.fulfilled, (state, action) => {
+      .addCase(updateQuestion.fulfilled, (state) => {
         state.loading = false;
       })
       .addCase(updateQuestion.rejected, (state) => {
@@ -198,7 +198,7 @@ const formSlice = createSlice({
       .addCase(getAllForms.rejected, (state) => {
         state.loading = false;
       });
-  },
+  }
 });
 
 export const { resetForm } = formSlice.actions;

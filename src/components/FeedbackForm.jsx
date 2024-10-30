@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFormDetails } from "../store/Slices/formSlice";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -7,7 +7,7 @@ import Loader from "./Loader";
 import { IoIosArrowBack } from "react-icons/io";
 import {
   addFeedback,
-  checkFeedbackSubmission,
+  checkFeedbackSubmission
 } from "../store/Slices/feedbackSlice.js";
 import toast from "react-hot-toast";
 
@@ -22,15 +22,15 @@ const FeedbackForm = () => {
   const {
     handleSubmit,
     control,
-    reset,
+
     setValue,
-    formState: { errors },
+    formState: { errors }
   } = useForm();
 
   useEffect(() => {
     dispatch(getFormDetails(formId));
     dispatch(checkFeedbackSubmission(formId));
-  }, [dispatch, id]);
+  }, [dispatch, formId]);
 
   useEffect(() => {
     if (formData) {
@@ -43,7 +43,7 @@ const FeedbackForm = () => {
   const onSubmit = async (data) => {
     const responses = formData.questions.map((question) => ({
       questionID: question._id,
-      responseText: data[question._id],
+      responseText: data[question._id]
     }));
 
     const res = await dispatch(addFeedback({ formId, responses }));

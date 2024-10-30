@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -6,7 +6,7 @@ import {
   getFormDetails,
   resetForm,
   updateForm,
-  updateQuestion,
+  updateQuestion
 } from "../store/Slices/formSlice.js";
 import { IoIosArrowBack } from "react-icons/io";
 import Loader from "./Loader.jsx";
@@ -53,7 +53,7 @@ function ViewFormDetails() {
     const details = {
       formId,
       title: editedTitle,
-      description: editedDescription,
+      description: editedDescription
     };
 
     const res = await dispatch(updateForm(details));
@@ -72,7 +72,7 @@ function ViewFormDetails() {
     const updatedQuestion = {
       questionId,
       question: editedQuestions[questionId],
-      options: editedOptions[questionId],
+      options: editedOptions[questionId]
     };
 
     const res = await dispatch(updateQuestion(updatedQuestion));
@@ -88,7 +88,7 @@ function ViewFormDetails() {
   const handleQuestionChange = (questionId, value) => {
     setEditedQuestions((prev) => ({
       ...prev,
-      [questionId]: value,
+      [questionId]: value
     }));
   };
 
@@ -96,15 +96,15 @@ function ViewFormDetails() {
     setEditedOptions((prev) => ({
       ...prev,
       [questionId]: prev[questionId].map((option, index) =>
-        index === optionIndex ? value : option,
-      ),
+        index === optionIndex ? value : option
+      )
     }));
   };
 
   const handleAddOption = (questionId) => {
     setEditedOptions((prev) => ({
       ...prev,
-      [questionId]: [...prev[questionId], ""],
+      [questionId]: [...prev[questionId], ""]
     }));
   };
 
@@ -212,7 +212,7 @@ function ViewFormDetails() {
                           className="text-gray-500 font-semibold mr-2"
                           onClick={() =>
                             setEditQuestionMode((prev) =>
-                              prev.filter((id) => id !== question._id),
+                              prev.filter((id) => id !== question._id)
                             )
                           }
                         >
@@ -271,7 +271,7 @@ function ViewFormDetails() {
                             handleOptionChange(
                               question._id,
                               index,
-                              e.target.value,
+                              e.target.value
                             )
                           }
                         />

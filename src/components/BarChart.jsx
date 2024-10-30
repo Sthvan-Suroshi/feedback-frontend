@@ -1,4 +1,3 @@
-import React from "react";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -7,7 +6,7 @@ import {
   BarElement,
   Title,
   Tooltip,
-  Legend,
+  Legend
 } from "chart.js";
 
 ChartJS.register(
@@ -53,7 +52,7 @@ const BarChart = ({ data }) => {
             Math.random() * 255
           )}, ${Math.floor(Math.random() * 255)}, 1)`,
           borderWidth: 1,
-          data: new Array(questions.length).fill(0),
+          data: new Array(questions.length).fill(0)
         });
         datasetIndex = datasets.length - 1;
       }
@@ -86,7 +85,7 @@ const BarChart = ({ data }) => {
                 Math.random() * 255
               )}, 1)`,
               borderWidth: 1,
-              data: new Array(questions.length).fill(0),
+              data: new Array(questions.length).fill(0)
             });
             datasetIndex = datasets.length - 1;
           }
@@ -114,7 +113,7 @@ const BarChart = ({ data }) => {
                 Math.random() * 255
               )}, 1)`,
               borderWidth: 1,
-              data: new Array(questions.length).fill(0),
+              data: new Array(questions.length).fill(0)
             });
             datasetIndex = datasets.length - 1;
           }
@@ -127,20 +126,20 @@ const BarChart = ({ data }) => {
 
   const chartData = {
     labels: questionLabels,
-    datasets: datasets,
+    datasets: datasets
   };
 
   const options = {
     responsive: true,
     plugins: {
       legend: {
-        position: "top",
+        position: "top"
       },
       title: {
         display: true,
-        text: data.formTitle,
-      },
-    },
+        text: data.formTitle
+      }
+    }
   };
 
   return <Bar data={chartData} options={options} />;

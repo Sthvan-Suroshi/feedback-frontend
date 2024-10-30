@@ -1,4 +1,3 @@
-import React from "react";
 import GetImagePreview from "./GetImagePreview";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,8 +11,8 @@ function EditImageFeedback({ post, setPopUp }) {
   const { control, register, handleSubmit } = useForm({
     defaultValues: {
       title: post?.title,
-      description: post?.description,
-    },
+      description: post?.description
+    }
   });
 
   const editFeedback = async (data) => {
@@ -71,7 +70,7 @@ function EditImageFeedback({ post, setPopUp }) {
                 placeholder="Enter feedback title"
                 className=" border-2 bg-slate-50 py-1  px-1 rounded-md"
                 {...register("title", {
-                  required: true,
+                  required: true
                 })}
               />
 
@@ -86,7 +85,7 @@ function EditImageFeedback({ post, setPopUp }) {
                 placeholder="Enter feedback description"
                 className="border-2 bg-slate-50 py-1 px-1 resize-y rounded-md max-h-64"
                 {...register("description", {
-                  required: true,
+                  required: true
                 })}
               />
             </div>

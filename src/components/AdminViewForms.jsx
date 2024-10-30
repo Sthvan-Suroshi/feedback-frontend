@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteForm, getAllForms, resetForm } from "../store/Slices/formSlice";
 import { Link } from "react-router-dom";
 import { TbFileText } from "react-icons/tb";
 import { MdDeleteOutline } from "react-icons/md";
-import { Loader } from "./index";
+import { Loader } from "./index"; 
 import { formatDate } from "../utils/formatDate.js";
 import { GrAnalytics } from "react-icons/gr";
 import toast from "react-hot-toast";
