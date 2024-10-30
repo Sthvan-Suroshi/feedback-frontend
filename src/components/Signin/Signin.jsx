@@ -4,16 +4,20 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../store/Slices/authSlice";
 import toast from "react-hot-toast";
-import Loader from "../Loader";
+import { useState } from "react";
+
 function Signin() {
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
   const { handleSubmit, register } = useForm();
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.auth.loading);
-  const accountType = useSelector((state) => state.auth.accountType);
+
   const login = async (details) => {
+    setLoading(true);
     const res = await dispatch(loginUser(details));
-    if ((res.type = "loginUser/fulfilled")) {
+
+    if (res.type === "loginUser/fulfilled") {
       toast.success("Logged in successfully");
       if (res.payload.accountType === "admin") {
         navigate("/all-images");
@@ -26,7 +30,11 @@ function Signin() {
       if (res.payload.accountType === "student") {
         navigate("/upload-feedback");
       }
+    } else {
+      toast.error("Invalid credentials");
     }
+
+    setLoading(false);
   };
   return (
     <>
@@ -63,7 +71,7 @@ function Signin() {
         <button type="submit">
           {loading ? (
             <div className=" w-full h-full flex items-center justify-center">
-              <Loader />
+              fetching credentials...
             </div>
           ) : (
             "Signin"

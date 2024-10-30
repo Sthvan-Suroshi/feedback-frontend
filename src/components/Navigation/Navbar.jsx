@@ -8,8 +8,8 @@ function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    dispatch(logoutUser());
+  const handleLogout = async () => {
+    await dispatch(logoutUser());
     navigate("/");
   };
   return (

@@ -12,7 +12,7 @@ export const registerUser = createAsyncThunk(
   async (details) => {
     const response = await axiosInstance.post("/users/register", details);
     return response.data;
-  }
+  },
 );
 
 export const loginUser = createAsyncThunk("loginUser", async (details) => {
@@ -22,7 +22,6 @@ export const loginUser = createAsyncThunk("loginUser", async (details) => {
 
 export const getCurrentUser = createAsyncThunk("getCurrentUser", async () => {
   const response = await axiosInstance.get("/users/current-user");
-
   return response.data.data;
 });
 

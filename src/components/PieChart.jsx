@@ -8,7 +8,7 @@ import {
   ArcElement,
   Title,
   Tooltip,
-  Legend,
+  Legend
 } from "chart.js";
 
 ChartJS.register(
@@ -49,7 +49,7 @@ const PieChart = ({ data }) => {
           backgroundColor: [],
           borderColor: [],
           borderWidth: 1,
-          data: [],
+          data: []
         });
         datasetIndex = datasets.length - 1;
       }
@@ -85,7 +85,7 @@ const PieChart = ({ data }) => {
               backgroundColor: [],
               borderColor: [],
               borderWidth: 1,
-              data: [],
+              data: []
             });
             datasetIndex = datasets.length - 1;
           }
@@ -115,7 +115,7 @@ const PieChart = ({ data }) => {
               backgroundColor: [],
               borderColor: [],
               borderWidth: 1,
-              data: [],
+              data: []
             });
             datasetIndex = datasets.length - 1;
           }
@@ -138,20 +138,20 @@ const PieChart = ({ data }) => {
 
   const chartData = {
     labels: questionLabels,
-    datasets: datasets,
+    datasets: datasets
   };
 
   const options = {
     responsive: true,
     plugins: {
       legend: {
-        position: "top",
+        position: "top"
       },
       title: {
         display: true,
-        text: data.formTitle,
-      },
-    },
+        text: data.formTitle
+      }
+    }
   };
 
   return <Pie data={chartData} options={options} />;

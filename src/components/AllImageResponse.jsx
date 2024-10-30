@@ -5,11 +5,10 @@ import { Link } from "react-router-dom";
 
 function AllImageResponse() {
   const dispatch = useDispatch();
-  const loadingStatus = useSelector((state) => state.imageFeedback.loading);
 
   useEffect(() => {
     const res = dispatch(getAllImageResponses());
-  }, [dispatch, loadingStatus]);
+  }, [dispatch]);
 
   const feedbacks = useSelector((state) => state.imageFeedback.feedbacks);
 

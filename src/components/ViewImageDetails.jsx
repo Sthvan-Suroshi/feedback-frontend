@@ -28,7 +28,10 @@ function ViewImageDetails() {
     <div className="">
       {feedback && (
         <>
-          <Link to="/all-images" className="flex items-center my-4 mx-3 font-semibold">
+          <Link
+            to="/all-images"
+            className="flex items-center my-4 mx-3 font-semibold"
+          >
             <IoIosArrowBack /> Back
           </Link>
           <div className="flex items-center justify-center gap-4 p-2 ">

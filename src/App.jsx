@@ -16,7 +16,7 @@ import {
   AdminViewForms,
   ViewFormDetails,
   CreateAdmin,
-  CreateForm,
+  CreateForm
 } from "./components";
 import Auth from "./components/Auth";
 import { useDispatch } from "react-redux";
@@ -39,7 +39,7 @@ function App() {
         <Route
           path="/form/:id"
           element={
-            <Auth authentication={true} allowedRoles={["instructor", "admin"]}>
+            <Auth authentication allowedRoles={["instructor", "admin"]}>
               <ViewFormDetails />
             </Auth>
           }
@@ -48,7 +48,7 @@ function App() {
         <Route
           path="/feedback/:id"
           element={
-            <Auth authentication={true} allowedRoles={["admin"]}>
+            <Auth authentication allowedRoles={["admin"]}>
               <ViewImageDetails />
             </Auth>
           }
@@ -57,7 +57,7 @@ function App() {
         <Route
           path="/analytics/:id"
           element={
-            <Auth authentication={true} allowedRoles={["admin", "instructor"]}>
+            <Auth authentication allowedRoles={["admin", "instructor"]}>
               <FormAnalytics />
             </Auth>
           }
@@ -66,14 +66,14 @@ function App() {
         <Route
           path="/fill-form/:id"
           element={
-            <Auth authentication={true} allowedRoles={["student"]}>
+            <Auth authentication allowedRoles={["student"]}>
               <FeedbackForm />
             </Auth>
           }
         />
         <Route
           element={
-            <Auth authentication={true} allowedRoles={["admin"]}>
+            <Auth authentication allowedRoles={["admin"]}>
               <Layout />
             </Auth>
           }
@@ -85,7 +85,7 @@ function App() {
 
         <Route
           element={
-            <Auth authentication={true} allowedRoles={["admin", "instructor"]}>
+            <Auth authentication allowedRoles={["admin", "instructor"]}>
               <Layout />
             </Auth>
           }
@@ -96,7 +96,7 @@ function App() {
 
         <Route
           element={
-            <Auth authentication={true} allowedRoles={["student"]}>
+            <Auth authentication allowedRoles={["student"]}>
               <Layout />
             </Auth>
           }
@@ -107,7 +107,7 @@ function App() {
 
         <Route
           element={
-            <Auth authentication={true} allowedRoles={["student"]}>
+            <Auth authentication allowedRoles={["student"]}>
               <Layout />
             </Auth>
           }
