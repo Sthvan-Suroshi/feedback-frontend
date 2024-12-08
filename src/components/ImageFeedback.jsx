@@ -1,77 +1,154 @@
-import GetImagePreview from "./GetImagePreview";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { addImageFeedback } from "../store/Slices/imageFeedbackSlice";
 import toast from "react-hot-toast";
+import GetImagePreview from "./GetImagePreview";
+import { FaUpload, FaSpinner, FaCheckCircle } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 
 function ImageFeedback() {
   const { handleSubmit, register, control, reset, setValue } = useForm();
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const loading = useSelector((state) => state.imageFeedback.loading);
   const dispatch = useDispatch();
+
   const addFeedback = async (data) => {
+    console.log(data);
     const res = await dispatch(addImageFeedback(data));
 
     if (res.type === "addImageFeedback/fulfilled") {
+      setIsSuccess(true);
       toast.success("Feedback added successfully");
-      reset();
-      setValue("image", null);
+      setTimeout(() => {
+        setIsSuccess(false);
+        reset();
+        setValue("image", null);
+      }, 2000);
     }
 
     if (res.type === "addImageFeedback/rejected") {
       toast.error("Couldn't add feedback");
     }
   };
+
   return (
-    <form
-      className="w-full mt-10 overflow-y-auto h-screen"
-      onSubmit={handleSubmit(addFeedback)}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="max-w-2xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg"
     >
-      <div className="w-3/4 h-1/2 mx-auto border-slate-900 border-2 rounded-md">
-        <GetImagePreview
-          name="image"
-          control={control}
-          className="w-full object-cover border-none border-slate-900 h-full"
-          cameraIcon
-        />
-      </div>
-      <div className="w-full flex items-center mt-6 flex-col">
-        <div className="w-3/4 flex flex-col ">
-          <label htmlFor="title" className="">
+      <form onSubmit={handleSubmit(addFeedback)}>
+        <motion.h2
+          className="text-2xl font-bold mb-6 text-[#3e3e65]"
+          initial={{ x: -20 }}
+          animate={{ x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          Add Image Feedback
+        </motion.h2>
+
+        <motion.div
+          className="mb-6"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <GetImagePreview
+            loading={loading}
+            name="image"
+            control={control}
+            className="w-full h-64 object-cover rounded-lg border-2 border-[#214e82] hover:border-[#2e61a8] transition-colors duration-300"
+            cameraSize={40}
+          />
+        </motion.div>
+
+        <motion.div
+          className="mb-4"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+        >
+          <label
+            htmlFor="title"
+            className="block text-sm font-medium text-[#3e3e65] mb-1"
+          >
             Title
           </label>
           <input
             name="title"
             type="text"
             placeholder="Enter feedback title"
-            className=" border-2 bg-slate-200 py-1 focus:outline-none px-1 rounded-md"
-            {...register("title", {
-              required: true
-            })}
+            className="w-full px-3 py-2 border border-[#214e82] rounded-md focus:outline-none focus:ring-2 focus:ring-[#2e61a8] transition-all duration-300"
+            {...register("title", { required: true })}
           />
+        </motion.div>
 
-          <label htmlFor="description" className="mt-2">
+        <motion.div
+          className="mb-6"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
+        >
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-[#3e3e65] mb-1"
+          >
             Description
           </label>
           <textarea
             name="description"
-            type="text"
-            rows="5"
-            cols="30"
+            rows="4"
             placeholder="Enter feedback description"
-            className="border-2 bg-slate-200 py-1 px-1 focus:outline-none resize-none rounded-md"
-            {...register("description", {
-              required: true
-            })}
+            className="w-full px-3 py-2 border border-[#214e82] rounded-md focus:outline-none focus:ring-2 focus:ring-[#2e61a8] transition-all duration-300 resize-none"
+            {...register("description", { required: true })}
           />
-        </div>
-      </div>
-      <div className="w-full flex items-center mt-6 flex-col">
-        <button className="group/btn mr-1 flex w-auto items-center gap-x-2 bg-slate-400 px-3 py-2 text-center font-semibold text-black shadow-[5px_5px_0px_0px_#4f4e4e] transition-all duration-150 ease-in-out active:translate-x-[5px] active:translate-y-[5px] active:shadow-[0px_0px_0px_0px_#4f4e4e]">
-          {loading ? "Adding..." : "Add Feedback"}
-        </button>
-      </div>
-    </form>
+        </motion.div>
+
+        <motion.div
+          className="flex justify-center"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 1 }}
+        >
+          <AnimatePresence>
+            {isSuccess ? (
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0 }}
+                className="bg-green-500 text-white font-bold py-2 px-6 rounded-full flex items-center justify-center min-w-[200px]"
+              >
+                <FaCheckCircle className="mr-2" />
+                Success!
+              </motion.div>
+            ) : (
+              <motion.button
+                type="submit"
+                className="bg-[#214e82] hover:bg-[#2e61a8] text-white font-bold py-2 px-6 rounded-full transition duration-300 ease-in-out flex items-center justify-center min-w-[200px]"
+                disabled={loading}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {loading ? (
+                  <>
+                    <FaSpinner className="animate-spin mr-2" />
+                    Adding...
+                  </>
+                ) : (
+                  <>
+                    <FaUpload className="mr-2" />
+                    Add Feedback
+                  </>
+                )}
+              </motion.button>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </form>
+    </motion.div>
   );
 }
 

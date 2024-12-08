@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 function Auth({ children, authentication, allowedRoles }) {
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.status);
+  
   let accountType = useSelector((state) => state.auth.accountType);
   accountType === null ? (accountType = "all") : accountType;
 

@@ -1,55 +1,124 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../store/Slices/authSlice";
+import { FaBars, FaTimes, FaUser, FaSignOutAlt } from "react-icons/fa";
 
 function Navbar() {
   const user = useSelector((state) => state.auth?.userDetails);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     await dispatch(logoutUser());
     navigate("/");
   };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <div className="text-black border-x-0 border bg-slate-100 flex px-10 py-4 justify-between items-center sticky top-0 z-[999] shadow-lg">
-      <div className="font-bold hover:transform hover:scale-105 cursor-pointer ease-in-out duration-300">
-        Feedback Portal
-      </div>
-
-      <div className="basis-24 flex justify-end">
-        {user ? (
-          <div className="font-bold flex gap-5 justify-center items-center">
-            <p>{user.fullName}</p>
+    <nav className="bg-[#e8ecf4] text-[#2e61a8] shadow-lg sticky top-0 z-[999]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center">
+            <div className="flex-shrink-0 font-bold text-xl cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105">
+              Feedback Portal
+            </div>
+          </div>
+          <div className="hidden md:block">
+            <div className="ml-4 flex items-center space-x-4">
+              {user ? (
+                <>
+                  <div className="flex items-center space-x-2">
+                    <FaUser className="text-[#2e61a8]" />
+                    <span>{user.fullName}</span>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="bg-[#214e82] hover:bg-[#2e61a8] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out flex items-center"
+                  >
+                    <FaSignOutAlt className="mr-2" />
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={() => navigate("/signin")}
+                    className="bg-[#214e82] hover:bg-[#2e61a8] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+                  >
+                    Login
+                  </button>
+                  <button
+                    onClick={() => navigate("/signup")}
+                    className="bg-[#214e82] hover:bg-[#2e61a8] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+                  >
+                    Signup
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+          <div className="md:hidden flex items-center">
             <button
-              className="group/btn mr-1 flex w-auto items-center gap-x-2 bg-slate-400 px-3 py-2 text-center font-bold text-black shadow-[5px_5px_0px_0px_#4f4e4e] transition-all duration-150 ease-in-out active:translate-x-[5px] active:translate-y-[5px] active:shadow-[0px_0px_0px_0px_#4f4e4e]"
-              type="submit"
-              onClick={handleLogout}
+              onClick={toggleMenu}
+              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
             >
-              Logout
+              {isMenuOpen ? (
+                <FaTimes className="h-6 w-6" />
+              ) : (
+                <FaBars className="h-6 w-6" />
+              )}
             </button>
           </div>
-        ) : (
-          <div className="flex gap-4">
-            <button
-              onClick={() => navigate("/signin")}
-              className="group/btn mr-1 flex w-auto items-center gap-x-2 bg-slate-400 px-3 py-2 text-center font-bold text-black shadow-[5px_5px_0px_0px_#4f4e4e] transition-all duration-150 ease-in-out active:translate-x-[5px] active:translate-y-[5px] active:shadow-[0px_0px_0px_0px_#4f4e4e]"
-              type="submit"
-            >
-              Login
-            </button>
-
-            <button
-              onClick={() => navigate("/signup")}
-              className="group/btn mr-1 flex w-auto items-center gap-x-2 bg-slate-400 px-3 py-2 text-center font-bold text-black shadow-[5px_5px_0px_0px_#4f4e4e] transition-all duration-150 ease-in-out active:translate-x-[5px] active:translate-y-[5px] active:shadow-[0px_0px_0px_0px_#4f4e4e]"
-              type="submit"
-            >
-              Signup
-            </button>
-          </div>
-        )}
+        </div>
       </div>
-    </div>
+
+      {isMenuOpen && (
+        <div className="md:hidden">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            {user ? (
+              <>
+                <div className="flex items-center space-x-2 text-white px-3 py-2">
+                  <FaUser className="text-[#2e61a8]" />
+                  <span>{user.fullName}</span>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="text-white hover:bg-[#2e61a8] block px-3 py-2 rounded-md text-base font-medium w-full text-left transition duration-300 ease-in-out"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    navigate("/signin");
+                    setIsMenuOpen(false);
+                  }}
+                  className="text-white hover:bg-[#2e61a8] block px-3 py-2 rounded-md text-base font-medium w-full text-left transition duration-300 ease-in-out"
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => {
+                    navigate("/signup");
+                    setIsMenuOpen(false);
+                  }}
+                  className="text-white hover:bg-[#2e61a8] block px-3 py-2 rounded-md text-base font-medium w-full text-left transition duration-300 ease-in-out"
+                >
+                  Signup
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+    </nav>
   );
 }
 

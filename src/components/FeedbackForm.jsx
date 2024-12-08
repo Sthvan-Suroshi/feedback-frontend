@@ -10,6 +10,7 @@ import {
   checkFeedbackSubmission
 } from "../store/Slices/feedbackSlice.js";
 import toast from "react-hot-toast";
+import { motion } from "framer-motion";
 
 const FeedbackForm = () => {
   const { id } = useParams();
@@ -22,7 +23,6 @@ const FeedbackForm = () => {
   const {
     handleSubmit,
     control,
-
     setValue,
     formState: { errors }
   } = useForm();
@@ -55,42 +55,54 @@ const FeedbackForm = () => {
 
   if (!formData || loading) {
     return (
-      <div className="absolute inset-0 flex items-center justify-center z-[999]">
+      <div className="flex items-center justify-center h-[70vh]">
         <Loader h="32" />
       </div>
     );
   }
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-3 max-w-xl  mx-auto my-4">
-      <Link to={"/view-forms"} className="flex items-center">
-        <IoIosArrowBack />
-        Back
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-white shadow-lg rounded-lg p-6 max-w-2xl mx-auto my-8"
+    >
+      <Link
+        to="/view-forms"
+        className="flex items-center text-[#214e82] hover:text-[#3e3e65] transition-colors duration-200 mb-4"
+      >
+        <IoIosArrowBack className="mr-2" />
+        Back to Forms
       </Link>
-      <h1 className="text-2xl font-bold mb-4 border-b shadow-sm">
+      <h1 className="text-3xl font-bold mb-4 text-[#3e3e65]">
         {formData.title}
       </h1>
-      <p className="text-gray-700 border-b shadow-sm ">
-        {formData.description}
+      <p className="text-gray-700 mb-6">{formData.description}</p>
+      <p className="text-sm text-gray-500 italic mb-6">
+        Note: Once submitted, this form cannot be edited.
       </p>
-      <span className="text-xs italic mb-4 inline-block border-b shadow-sm">
-        form once submited will not be editable*
-      </span>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {formData.questions.map((question, idx) => (
-          <div key={question._id} className="mb-4 border-b shadow-sm">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+          <motion.div
+            key={question._id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: idx * 0.1 }}
+            className="p-4 bg-gray-50 rounded-lg"
+          >
+            <label className="block text-[#3e3e65] text-lg font-semibold mb-2">
               {idx + 1}. {question.question}
             </label>
             {question.options !== null ? (
-              question.options.map((option, index) => (
-                <div key={index} className="mb-2">
-                  <Controller
-                    name={question._id}
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <div>
+              <div className="space-y-2">
+                {question.options.map((option, index) => (
+                  <div key={index} className="flex items-center">
+                    <Controller
+                      name={question._id}
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field }) => (
                         <input
                           type="radio"
                           id={`${question._id}-${index}`}
@@ -99,17 +111,17 @@ const FeedbackForm = () => {
                           checked={field.value === option}
                           className="mr-2"
                         />
-                        <label
-                          htmlFor={`${question._id}-${index}`}
-                          className="text-gray-700"
-                        >
-                          {option}
-                        </label>
-                      </div>
-                    )}
-                  />
-                </div>
-              ))
+                      )}
+                    />
+                    <label
+                      htmlFor={`${question._id}-${index}`}
+                      className="text-gray-700"
+                    >
+                      {option}
+                    </label>
+                  </div>
+                ))}
+              </div>
             ) : (
               <Controller
                 name={question._id}
@@ -119,27 +131,29 @@ const FeedbackForm = () => {
                   <textarea
                     id={question._id}
                     rows="4"
-                    className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none resize-none"
+                    className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#214e82] transition-all duration-200 resize-none"
                     {...field}
                   ></textarea>
                 )}
               />
             )}
             {errors[question._id] && (
-              <p className="text-red-500 text-xs italic">
+              <p className="text-red-500 text-sm mt-1">
                 This field is required.
               </p>
             )}
-          </div>
+          </motion.div>
         ))}
-        <button
+        <motion.button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="w-full bg-[#214e82] text-white px-6 py-3 rounded-md hover:bg-[#3e3e65] transition-colors duration-300 font-semibold text-lg"
         >
           Submit Feedback
-        </button>
+        </motion.button>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

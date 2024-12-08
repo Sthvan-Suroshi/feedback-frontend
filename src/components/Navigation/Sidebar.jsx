@@ -65,25 +65,33 @@ const Sidebar = () => {
   );
 
   return (
-    <div className="w-[15vw] border-slate-400 border-x-2 h-screen">
-      <div className="flex flex-col gap-2">
-        {filteredNavItems.map((item) => (
-          <div key={item.name}>
-            <NavLink
-              to={item.path}
-              className={({ isActive }) =>
-                isActive
-                  ? "flex items-center gap-2 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] bg-slate-400 hover:bg-[#27374d] hover:text-[#dde6ed]"
-                  : "flex items-center gap-2 text-base no-underline font-semibold p-2 transition ease-in-out duration-300 text-[#27374d] hover:bg-[#27374d] hover:text-[#dde6ed]"
-              }
-            >
-              {item.icon}
-              {item.name}
-            </NavLink>
-          </div>
-        ))}
+    <>
+      <div
+        className={`fixed top-0 left-0 h-full bg-[#f0f4f8] text-[#3e3e65] shadow-xl transition-all duration-300 ease-in-out md:w-64 overflow-x-hidden`}
+      >
+        <div className="p-2 mt-5">
+          <h2 className="text-2xl font-bold mb-6 text-[#214e82]">Dashboard</h2>
+          <nav>
+            {filteredNavItems.map((item) => (
+              <NavLink
+                key={item.name}
+                to={item.path}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 p-3 mt-3 rounded-lg transition-all duration-200 ${
+                    isActive
+                      ? "bg-[#2e61a8] text-white"
+                      : "text-[#3e3e65] hover:bg-[#d0e1f9]"
+                  }`
+                }
+              >
+                <span className="text-xl">{item.icon}</span>
+                <span className="font-medium">{item.name}</span>
+              </NavLink>
+            ))}
+          </nav>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

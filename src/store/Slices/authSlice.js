@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../utils/axiosInstance";
+
 const initialState = {
   userDetails: null,
   loading: false,
   status: false,
-  accountType: null,
+  accountType: null
 };
 
 export const registerUser = createAsyncThunk(
@@ -12,11 +13,12 @@ export const registerUser = createAsyncThunk(
   async (details) => {
     const response = await axiosInstance.post("/users/register", details);
     return response.data;
-  },
+  }
 );
 
 export const loginUser = createAsyncThunk("loginUser", async (details) => {
   const response = await axiosInstance.post("/users/login", details);
+  console.log(response.data.data);
   return response.data.data;
 });
 
@@ -93,7 +95,7 @@ const authSlice = createSlice({
         state.userDetails = null;
         state.accountType = null;
       });
-  },
+  }
 });
 
 export default authSlice.reducer;

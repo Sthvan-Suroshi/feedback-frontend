@@ -1,29 +1,40 @@
 import { Controller } from "react-hook-form";
+import { motion } from "framer-motion";
 
 const FormInput = ({ label, name, control }) => (
-  <div className="mb-4">
-    <label className="block text-sm font-medium text-gray-700">
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.3 }}
+    className="mb-4"
+  >
+    <label className="block text-sm font-medium text-[#3e3e65]">
       {label}:
       <Controller
         name={name}
         control={control}
         render={({ field, fieldState }) => (
           <>
-            <input
+            <motion.input
               type="text"
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-[#2e61a8] focus:border-[#2e61a8] sm:text-sm transition-all duration-300"
               {...field}
+              whileFocus={{ scale: 1.02 }}
             />
             {fieldState.error && (
-              <p className="text-red-500 text-sm mt-2">
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-red-500 text-sm mt-2"
+              >
                 {fieldState.error.message}
-              </p>
+              </motion.p>
             )}
           </>
         )}
       />
     </label>
-  </div>
+  </motion.div>
 );
 
 export default FormInput;

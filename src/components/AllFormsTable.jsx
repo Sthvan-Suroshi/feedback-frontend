@@ -6,12 +6,16 @@ import {
   resetForm
 } from "../store/Slices/formSlice";
 import { Link } from "react-router-dom";
-import { TbFileText } from "react-icons/tb";
-import { MdDeleteOutline } from "react-icons/md";
+import {
+  FiFileText,
+  FiTrash2,
+  FiBarChart2,
+  FiAlertCircle
+} from "react-icons/fi";
 import { Loader, TogglePublish } from "./index";
 import { formatDate } from "../utils/formatDate.js";
-import { GrAnalytics } from "react-icons/gr";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
+import { motion, AnimatePresence } from "framer-motion";
 
 function AllFormsTable() {
   const dispatch = useDispatch();
@@ -38,97 +42,110 @@ function AllFormsTable() {
     };
   }, [dispatch]);
 
-  if (forms.length === 0) {
-    return (
-      <div className="flex items-start justify-center w-screen mt-10 ">
-        <p className="text-3xl">No Forms Found</p>
-      </div>
-    );
-  }
-
   if (loadingStatus) {
     return (
-      <div className="flex items-center justify-center absolute inset-0 ">
+      <div className="flex items-center justify-center h-[88vh]">
         <Loader h="32" />
       </div>
     );
   }
 
+  if (forms.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen text-[#3e3e65]">
+        <FiAlertCircle className="w-16 h-16 mb-4" />
+        <p className="text-2xl font-semibold">No Forms Found</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-screen p-3">
-      <div>
-        <div className="mt-1">
-          <table className="w-full text-center table-auto">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-white rounded-lg shadow-md w-full max-w-4xl mx-auto my-8"
+    >
+      <div className="p-6 border-b border-gray-200">
+        <h2 className="text-2xl font-semibold text-[#3e3e65]">All Forms</h2>
+        <p className="text-sm text-gray-600 mt-1">Manage your created forms</p>
+      </div>
+      <div className="p-6">
+        <div className="overflow-x-auto">
+          <table className="w-full">
             <thead>
-              <tr>
-                <th className="px-4 py-2 w-1/3">Title</th>
-                <th className="px-4 py-2 w-1/3">Created On</th>
-                <th className="px-4 py-2 w-1/3">Action</th>
+              <tr className="text-left text-sm font-medium text-[#3e3e65] uppercase tracking-wider">
+                <th className="pb-3">Title</th>
+                <th className="pb-3">Created On</th>
+                <th className="pb-3 text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {forms.map((form) => (
-                <tr key={form._id} className="border-b">
-                  <td className="px-4 py-2 max-w-24 overflow-hidden text-ellipsis whitespace-nowrap w-1/3">
-                    {form.title}
-                  </td>
-                  <td className="px-4 py-2 w-1/3">
-                    {formatDate(form.createdAt)}
-                  </td>
-                  <td className="px-4 py-2 flex items-center justify-center gap-3 ">
-                    <div className="relative group">
-                      <Link to={`/form/${btoa(form._id)}`}>
-                        <button className="text-blue-500 px-4 py-2 rounded-md shadow-md hover:text-blue-600 text-lg">
-                          <TbFileText />
-                        </button>
-                      </Link>
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
-                        <div className="bg-black text-white text-xs rounded py-1 px-2 shadow-lg">
-                          View
-                        </div>
+              <AnimatePresence>
+                {forms.map((form) => (
+                  <motion.tr
+                    key={form._id}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="border-t border-gray-200"
+                  >
+                    <td className="py-4 font-medium text-[#3e3e65]">
+                      {form.title}
+                    </td>
+                    <td className="py-4 text-gray-500">
+                      {formatDate(form.createdAt)}
+                    </td>
+                    <td className="py-4">
+                      <div className="flex items-center justify-end space-x-2">
+                        <Tooltip content="View">
+                          <Link
+                            to={`/form/${btoa(form._id)}`}
+                            className="p-2 text-[#214e82] hover:bg-[#e6f0ff] rounded-full transition-colors duration-200"
+                          >
+                            <FiFileText className="w-5 h-5" />
+                          </Link>
+                        </Tooltip>
+                        <Tooltip content="Delete">
+                          <button
+                            onClick={() => handleDelete(form._id)}
+                            className="p-2 text-red-600 hover:bg-red-100 rounded-full transition-colors duration-200"
+                          >
+                            <FiTrash2 className="w-5 h-5" />
+                          </button>
+                        </Tooltip>
+                        <Tooltip content="Analytics">
+                          <Link
+                            to={`/analytics/${btoa(form._id)}`}
+                            className="p-2 text-green-600 hover:bg-green-100 rounded-full transition-colors duration-200"
+                          >
+                            <FiBarChart2 className="w-5 h-5" />
+                          </Link>
+                        </Tooltip>
+                        <TogglePublish
+                          formId={form._id}
+                          isPublished={form.isPublished}
+                        />
                       </div>
-                    </div>
-
-                    <div className="relative group">
-                      <button
-                        className="text-red-500  px-4 py-2 rounded-md shadow-md hover:text-red-600 text-lg"
-                        onClick={() => handleDelete(form._id)}
-                      >
-                        <MdDeleteOutline />
-                      </button>
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block opacity-0 group-hover:opacity-100 transition duration-300 delay-200">
-                        <div className="bg-black text-white text-xs rounded py-1 px-2 shadow-lg">
-                          Delete
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="relative group">
-                      <Link
-                        className="text-green-500 inline-block px-4 py-2 rounded-md shadow-md hover:text-green-600 text-lg"
-                        to={`/analytics/${btoa(form._id)}`}
-                      >
-                        <GrAnalytics />
-                      </Link>
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block opacity-0 group-hover:opacity-100 transition duration-300 delay-200">
-                        <div className="bg-black text-white text-xs rounded py-1 px-2 shadow-lg">
-                          Analytics
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <TogglePublish
-                        formId={form._id}
-                        isPublished={form.isPublished}
-                      />
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                    </td>
+                  </motion.tr>
+                ))}
+              </AnimatePresence>
             </tbody>
           </table>
         </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function Tooltip({ content, children }) {
+  return (
+    <div className="relative group">
+      {children}
+      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-[#3e3e65] text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        {content}
       </div>
     </div>
   );

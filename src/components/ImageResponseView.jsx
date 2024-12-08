@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { MdEdit } from "react-icons/md";
-import { MdDelete } from "react-icons/md";
+import { MdEdit, MdDelete } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteImageFeedback,
@@ -9,6 +8,7 @@ import {
 } from "../store/Slices/imageFeedbackSlice";
 import { EditImageFeedback, Loader } from "./index";
 import toast from "react-hot-toast";
+import { motion, AnimatePresence } from "framer-motion";
 
 function ImageResponseView() {
   const dispatch = useDispatch();
@@ -45,7 +45,7 @@ function ImageResponseView() {
 
   if (loadingStatus) {
     return (
-      <div className="flex items-center justify-center absolute inset-0 ">
+      <div className="flex items-center justify-center h-screen">
         <Loader h="32" />
       </div>
     );
@@ -53,55 +53,80 @@ function ImageResponseView() {
 
   if (feedbacks.length === 0) {
     return (
-      <div className="flex items-start justify-center w-screen mt-10 ">
-        <p className="text-3xl">No Feedback Found</p>
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-2xl text-[#3e3e65] font-semibold">
+          No Feedback Found
+        </p>
       </div>
     );
   }
 
   return (
     <>
-      {popUp && (
-        <div className="fixed inset-0 flex justify-center items-start bg-black/50 bg-opacity-75 z-[999]">
-          <EditImageFeedback setPopUp={setPopUp} post={post} />
-        </div>
-      )}
-      <div className="w-full mt-1">
-        {Array.isArray(feedbacks) &&
-          feedbacks.map((feedback) => (
-            <div key={feedback._id}>
-              <div className="flex items-center justify-center w-full gap-3 border-b-4 mb-3 ">
-                <div className="basis-1/4 h-32 ">
-                  <div className="w-full h-full overflow-hidden">
+      <AnimatePresence>
+        {popUp && <EditImageFeedback setPopUp={setPopUp} post={post} />}
+      </AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-4xl mx-auto px-4 py-8"
+      >
+        <h1 className="text-3xl font-bold text-[#3e3e65] mb-6">
+          Image Feedbacks
+        </h1>
+        <AnimatePresence>
+          {Array.isArray(feedbacks) &&
+            feedbacks.map((feedback) => (
+              <motion.div
+                key={feedback._id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="bg-white rounded-lg shadow-md overflow-hidden mb-4"
+              >
+                <div className="flex flex-col md:flex-row">
+                  <div className="w-full md:w-1/4 h-48 md:h-auto">
                     <img
-                      className="w-full h-full object-cover object-center"
+                      className="w-full h-full object-cover"
                       src={feedback.imageUrl}
-                      alt=""
+                      alt={feedback.title}
                     />
                   </div>
+                  <div className="w-full md:w-3/4 p-4 flex flex-col justify-between">
+                    <div>
+                      <h2 className="text-xl font-semibold text-[#3e3e65] mb-2">
+                        {feedback.title}
+                      </h2>
+                      <p className="text-gray-600 line-clamp-3">
+                        {feedback.description}
+                      </p>
+                    </div>
+                    <div className="flex justify-end mt-4 space-x-2">
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="text-[#214e82] hover:text-[#2e61a8] transition-colors duration-200"
+                        onClick={() => handleEdit(feedback)}
+                      >
+                        <MdEdit size={24} />
+                      </motion.button>
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="text-red-500 hover:text-red-700 transition-colors duration-200"
+                        onClick={() => deleteResponse(feedback._id)}
+                      >
+                        <MdDelete size={24} />
+                      </motion.button>
+                    </div>
+                  </div>
                 </div>
-                <div className="basis-1/2  h-32  overflow-hidden">
-                  <p className="text-ellipsis p-3">{feedback.title}</p>
-                </div>
-                <div className="basis-1/4 h-32 flex items-center justify-center gap-10 border-l-2">
-                  <button
-                    className="text-2xl border px-2 py-2 rounded border-slate-800"
-                    onClick={() => handleEdit(feedback)}
-                  >
-                    <MdEdit />
-                  </button>
-
-                  <button
-                    className="text-2xl border px-2 py-2 rounded border-slate-800"
-                    onClick={() => deleteResponse(feedback._id)}
-                  >
-                    <MdDelete />
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-      </div>
+              </motion.div>
+            ))}
+        </AnimatePresence>
+      </motion.div>
     </>
   );
 }
