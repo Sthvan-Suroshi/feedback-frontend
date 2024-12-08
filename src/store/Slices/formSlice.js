@@ -54,9 +54,8 @@ export const updateForm = createAsyncThunk("updateForm", async (details) => {
 export const deleteQuestion = createAsyncThunk(
   "deleteQuestion",
   async (questionId) => {
-    console.log(questionId);
     const response = await axiosInstance.delete(`forms/question/${questionId}`);
-    console.log(response.data);
+
     return response.data;
   }
 );

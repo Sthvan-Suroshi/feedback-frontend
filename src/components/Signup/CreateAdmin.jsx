@@ -1,4 +1,3 @@
-import "./Signup.css";
 import { useForm } from "react-hook-form";
 import { getCurrentUser, registerUser } from "../../store/Slices/authSlice";
 import { useDispatch } from "react-redux";

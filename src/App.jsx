@@ -117,7 +117,7 @@ function App() {
           <Route path="/view-responses" element={<ImageResponseView />} />
         </Route>
       </Routes>
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position="bottom-right" reverseOrder={false} />
     </div>
   );
 }

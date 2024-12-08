@@ -15,7 +15,7 @@ function ImageFeedback() {
   const dispatch = useDispatch();
 
   const addFeedback = async (data) => {
-    console.log(data);
+
     const res = await dispatch(addImageFeedback(data));
 
     if (res.type === "addImageFeedback/fulfilled") {

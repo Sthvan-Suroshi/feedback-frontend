@@ -102,7 +102,7 @@ function AllFormsTable() {
                         <Tooltip content="View">
                           <Link
                             to={`/form/${btoa(form._id)}`}
-                            className="p-2 text-[#214e82] hover:bg-[#e6f0ff] rounded-full transition-colors duration-200"
+                            className="p-2 text-[#214e82] hover:bg-[#e6f0ff] rounded-full transition-colors duration-200 inline-flex items-center justify-center"
                           >
                             <FiFileText className="w-5 h-5" />
                           </Link>
@@ -118,7 +118,7 @@ function AllFormsTable() {
                         <Tooltip content="Analytics">
                           <Link
                             to={`/analytics/${btoa(form._id)}`}
-                            className="p-2 text-green-600 hover:bg-green-100 rounded-full transition-colors duration-200"
+                            className="p-2 text-green-600 hover:bg-green-100 rounded-full transition-colors duration-200 inline-flex items-center justify-center"
                           >
                             <FiBarChart2 className="w-5 h-5" />
                           </Link>

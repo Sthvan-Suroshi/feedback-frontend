@@ -19,8 +19,6 @@ function GetImagePreview({
   const handlePreview = (e) => {
     const files = e.target.files;
 
-    console.log(files);
-
     if (files && files[0]) {
       setPreview(URL.createObjectURL(files[0]));
       return files;

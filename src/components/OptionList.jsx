@@ -36,12 +36,12 @@ const OptionsList = ({ fields, control, remove, append }) => (
           </label>
           <motion.button
             type="button"
-            className="ml-2 text-red-500 hover:text-red-700 transition-colors duration-200"
+            className="ml-2 mt-5 text-red-500 hover:text-red-700 transition-colors duration-200 rounded-full hover:bg-red-100 p-2"
             onClick={() => remove(index)}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            <FaTrash />
+            <FaTrash size={20}/>
           </motion.button>
         </motion.div>
       ))}

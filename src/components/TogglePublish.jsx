@@ -1,22 +1,25 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { togglePublish } from "../store/Slices/formSlice.js";
+import toast from "react-hot-toast";
 
 function TogglePublish({ formId, isPublished }) {
   const [isChecked, setIsChecked] = useState(isPublished);
   const dispatch = useDispatch();
 
-  const togglePublishStatus = () => {
+  const togglePublishStatus = async () => {
     const details = {
       formId,
       isPublished: !isChecked
     };
 
-    console.log(details);
-
     setIsChecked((prev) => !prev);
 
-    dispatch(togglePublish(details));
+    const res = await dispatch(togglePublish(details));
+
+    if (res.type === "togglePublish/fulfilled") {
+      toast.success("Form view toggled successfully");
+    }
   };
 
   return (

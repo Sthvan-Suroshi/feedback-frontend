@@ -22,7 +22,7 @@ function CreateForm() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="flex pt-20 justify-center px-4 sm:px-6 lg:px-8 w-full min-h-screen bg-gradient-to-b from-[#f0f4f8] to-white"
+      className="flex pt-20 justify-center px-4 sm:px-6 lg:px-8 w-full bg-gradient-to-b from-[#f0f4f8] to-white"
     >
       <motion.div
         initial={{ y: 20, opacity: 0 }}
