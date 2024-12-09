@@ -104,6 +104,7 @@ function Signup() {
             >
               <option value="student">Student (Default)</option>
               <option value="instructor">Instructor</option>
+              <option value="admin">All</option>
             </select>
           </div>
           <div className="relative">
@@ -121,6 +122,7 @@ function Signup() {
               <option value="MECH">MECH</option>
               <option value="CIVIL">CIVIL</option>
               <option value="AIML">AIML</option>
+              <option value="ALL">ALL</option>
             </select>
           </div>
         </div>

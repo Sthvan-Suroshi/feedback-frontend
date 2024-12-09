@@ -1,67 +1,116 @@
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import HomeImg from "../../src/assets/Images/home.png";
-import { useSelector } from "react-redux";
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { FaRobot, FaShieldAlt, FaChartBar } from 'react-icons/fa';
+import { IoMdSpeedometer } from 'react-icons/io';
+
 function Home() {
-  const status = useSelector((state) => state.auth.status);
-  const accountType = useSelector((state) => state.auth.accountType);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (status) {
-      if (accountType === "admin") {
-        navigate("/all-images");
-      }
-
-      if (accountType === "instructor") {
-        navigate("/create-form");
-      }
-
-      if (accountType === "student") {
-        navigate("/upload-feedback");
-      }
+  const [activeFeature, setActiveFeature] = useState(null);
+  console.log(activeFeature)
+  const features = [
+    {
+      icon: FaRobot,
+      title: 'AI-Powered',
+      description: 'Leverage advanced AI for insightful analysis',
+      color: 'text-[#214e82]'
+    },
+    {
+      icon: FaShieldAlt,
+      title: 'Incognito',
+      description: 'Provide feedback anonymously and securely.',
+      color: 'text-[#3e3e65]'
+    },
+    {
+      icon: FaChartBar,
+      title: 'Deep Analytics',
+      description: 'Gain comprehensive insights from your feedback',
+      color: 'text-[#214e82]'
+    },
+    {
+      icon: IoMdSpeedometer,
+      title: 'Rapid Results',
+      description: 'Get quick, actionable insights from your data',
+      color: 'text-[#3e3e65]'
     }
-  }, [status, accountType, navigate]);
+  ];
 
   return (
-    <>
-      <div className="content flex w-100% object-cover items-center pt-10">
-        <div className="flex flex-col p-[2rem] gap-[0.5em] flex-wrap basis-[65%] ">
-          <h1 className="font-[650]  text-[5rem] tracking-tight leading-none">
-            Enhance Learning Through Feedback
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-[#e6f0f9] text-gray-900">
+      <header className="container mx-auto px-4 md:px-6 py-2 md:py-5 flex justify-between items-center border-b border-gray-200">
+        <div className="flex items-center space-x-3">
+          <FaRobot className="text-[#214e82]" size={36} />
+          <h1 className="text-2xl md:text-3xl font-bold text-[#214e82]">
+            IntelliForm
           </h1>
+        </div>
+        <nav className="hidden md:flex space-x-4">
+          <Link to="/signin">
+            <button className="bg-[#214e82] text-white px-4 py-2 md:px-5 md:py-2 rounded-full hover:bg-[#2e61a8] transition">
+              Create Form
+            </button>
+          </Link>
+          <Link to="/signin">
+            <button className="border border-[#214e82] text-[#214e82] px-4 py-2 md:px-5 md:py-2 rounded-full hover:bg-[#3e3e65] hover:text-white hover:border-[#3e3e65] transition">
+              Submit Feedback
+            </button>
+          </Link>
+        </nav>
+      </header>
 
-          <p className="text-xl ">
-            Our anonymous feedback system empowers the institution to collect
-            valuable insights from students and staff, helping you improve
-            programs and elevate educational outcomes
+      <main className="container mx-auto px-4 md:px-6 py-4 md:py-16">
+        <section className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-5xl font-extrabold mb-4 md:mb-6 text-[#214e82]">
+            Revolutionize Feedback Collection
+          </h2>
+          <p className="text-base md:text-xl text-gray-600 max-w-3xl mx-auto mb-8 md:mb-12">
+            Harness cutting-edge AI and privacy technologies to transform how
+            organizations gather, analyze, and understand feedback.
           </p>
-          <div className="flex flex-row gap-4 text-center">
-            <Link
-              to={"/signin"}
-              className="group/btn inline-flex w-24 text-lg items-center justify-center bg-black text-white rounded-md bg-primary px-4 py-2  font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 "
-              type="submit"
-            >
-              Login
-            </Link>
-            <Link
-              to={"/signup"}
-              className="group/btn inline-flex w-24 text-lg items-center justify-center bg-black text-white rounded-md bg-primary px-4 py-2  font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 "
-              type="submit"
-            >
-              SignUp
-            </Link>
+
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className="bg-white border border-gray-200 rounded-xl p-4 md:p-6 
+                  transform transition duration-300 hover:shadow-xl 
+                  hover:border-[#214e82] hover:scale-105"
+                onMouseEnter={() => setActiveFeature(index)}
+                onMouseLeave={() => setActiveFeature(null)}
+              >
+                <div className={`mb-4 ${feature.color}`}>
+                  <feature.icon size={36} className="mx-auto" />
+                </div>
+                <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 text-[#214e82]">
+                  {feature.title}
+                </h3>
+                <p className="text-sm md:text-base text-gray-600">
+                  {feature.description}
+                </p>
+              </div>
+            ))}
           </div>
+        </section>
+
+        <div className="mt-[1px] md:mt-12 flex justify-center">
+          <Link to="/signin">
+            <button
+              className="flex items-center bg-[#214e82] text-white 
+                px-6 py-3 md:px-8 md:py-4 rounded-full hover:bg-[#2e61a8] 
+                transition transform hover:scale-105 text-base md:text-lg"
+            >
+              Start Your Intelligent Feedback Journey
+            </button>
+          </Link>
         </div>
-        <div className="HomeImg w-2/6 ml-6 basis-[35%]">
-          <img src={HomeImg} alt="" />
-        </div>
-      </div>
-      <footer className="justify-center text-center fixed bottom-0 w-full mb-3">
-        &copy; 2024 Feedback
+      </main>
+
+      <footer className="container mx-auto px-4 md:px-6 py-2 md:py-8 text-center border-t">
+        <p className="text-sm md:text-base text-gray-500">
+          © 2024 IntelliForm. Intelligent Feedback Redefined.
+        </p>
       </footer>
-    </>
+    </div>
   );
 }
 
 export default Home;
+
