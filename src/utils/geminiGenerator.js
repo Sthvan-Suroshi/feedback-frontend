@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-const genAI = new GoogleGenerativeAI("AIzaSyB383PKuy4OW1Wg3baeJMQssZGw5yGYGZ4");
+
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_KEY);
 
 export async function GenerateQuestions() {
   const model = genAI.getGenerativeModel({
