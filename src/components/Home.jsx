@@ -45,12 +45,12 @@ function Home() {
         <nav className="hidden md:flex space-x-4">
           <Link to="/signin">
             <button className="bg-[#214e82] text-white px-4 py-2 md:px-5 md:py-2 rounded-full hover:bg-[#2e61a8] transition">
-              Create Form
+              Login
             </button>
           </Link>
-          <Link to="/signin">
+          <Link to="/signup">
             <button className="border border-[#214e82] text-[#214e82] px-4 py-2 md:px-5 md:py-2 rounded-full hover:bg-[#3e3e65] hover:text-white hover:border-[#3e3e65] transition">
-              Submit Feedback
+              Sign up
             </button>
           </Link>
         </nav>

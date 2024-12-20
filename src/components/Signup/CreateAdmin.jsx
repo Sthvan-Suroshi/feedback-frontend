@@ -7,23 +7,25 @@ import { getCurrentUser, registerUser } from "../../store/Slices/authSlice";
 import toast, { Toaster } from "react-hot-toast";
 
 const CreateAdmin = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [createdAdmins, setCreatedAdmins] = useState([]);
 
   const submit = async (details) => {
     setIsSubmitting(true);
     try {
       const res = await dispatch(registerUser(details));
-      if (res.type === "registerUser/fulfilled") {
-        toast.success("Registered successfully");
-        await dispatch(getCurrentUser());
-        navigate("/signin");
+      if (res.payload && res.payload.success) {
+        toast.success("Admin registered successfully");
+        setCreatedAdmins([...createdAdmins, details]);
+        reset();
       } else {
-        toast.error("Registration failed. Please try again.");
+        toast.error(res.payload?.message || "Registration failed. Please try again.");
       }
     } catch (error) {
+      console.error("Registration error:", error);
       toast.error("An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
@@ -53,7 +55,10 @@ const CreateAdmin = () => {
         className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md"
       >
         <h2 className="text-3xl font-bold text-center mb-6 text-[#3e3e65]">Create Admin</h2>
-        <form onSubmit={handleSubmit(submit)} className="space-y-4">
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit(submit)();
+        }} className="space-y-4">
           {inputFields.map((field) => (
             <motion.div 
               key={field.name}
@@ -111,6 +116,30 @@ const CreateAdmin = () => {
             {isSubmitting ? 'Creating Admin...' : 'Create Admin'}
           </motion.button>
         </form>
+
+        {createdAdmins.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mt-8"
+          >
+            <h3 className="text-xl font-semibold mb-4 text-[#3e3e65]">Created Admins</h3>
+            <ul className="space-y-2">
+              {createdAdmins.map((admin, index) => (
+                <motion.li
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-gray-100 p-2 rounded-md"
+                >
+                  {admin.fullName} - {admin.email}
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
       </motion.div>
       <Toaster position="top-right" />
     </motion.div>

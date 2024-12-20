@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFormDetails } from "../store/Slices/formSlice";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -94,49 +94,57 @@ const FeedbackForm = () => {
             <label className="block text-[#3e3e65] text-lg font-semibold mb-2">
               {idx + 1}. {question.question}
             </label>
-            {question.options !== null ? (
-              <div className="space-y-2">
-                {question.options.map((option, index) => (
-                  <div key={index} className="flex items-center">
-                    <Controller
-                      name={question._id}
-                      control={control}
-                      rules={{ required: true }}
-                      render={({ field }) => (
-                        <input
-                          type="radio"
-                          id={`${question._id}-${index}`}
-                          value={option}
-                          onChange={() => field.onChange(option)}
-                          checked={field.value === option}
-                          className="mr-2"
-                        />
+            <Controller
+              name={question._id}
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <>
+                  {question.options && question.options.length > 0 ? (
+                    <div className="space-y-2">
+                      {question.options.map((option, index) => (
+                        <div key={index} className="flex items-center">
+                          <input
+                            type="radio"
+                            id={`${question._id}-${index}`}
+                            value={option}
+                            onChange={() => field.onChange(option)}
+                            checked={field.value === option}
+                            className="mr-2"
+                          />
+                          <label
+                            htmlFor={`${question._id}-${index}`}
+                            className="text-gray-700"
+                          >
+                            {option}
+                          </label>
+                        </div>
+                      ))}
+                      {question.allowDescription && (
+                        <div className="mt-2">
+                          <label className="block text-gray-700 mb-1">
+                            Additional Comments:
+                          </label>
+                          <textarea
+                            className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#214e82] transition-all duration-200 resize-none"
+                            rows="3"
+                            onChange={(e) => field.onChange(e.target.value)}
+                            value={field.value}
+                          ></textarea>
+                        </div>
                       )}
-                    />
-                    <label
-                      htmlFor={`${question._id}-${index}`}
-                      className="text-gray-700"
-                    >
-                      {option}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <Controller
-                name={question._id}
-                control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <textarea
-                    id={question._id}
-                    rows="4"
-                    className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#214e82] transition-all duration-200 resize-none"
-                    {...field}
-                  ></textarea>
-                )}
-              />
-            )}
+                    </div>
+                  ) : (
+                    <textarea
+                      id={question._id}
+                      rows="4"
+                      className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#214e82] transition-all duration-200 resize-none"
+                      {...field}
+                    ></textarea>
+                  )}
+                </>
+              )}
+            />
             {errors[question._id] && (
               <p className="text-red-500 text-sm mt-1">
                 This field is required.
@@ -158,3 +166,4 @@ const FeedbackForm = () => {
 };
 
 export default FeedbackForm;
+

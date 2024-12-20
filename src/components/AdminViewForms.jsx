@@ -1,20 +1,18 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+import { FiFileText, FiTrash2, FiBarChart2, FiEye } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteForm, getAllForms, resetForm } from "../store/Slices/formSlice";
-import { Link } from "react-router-dom";
-import { TbFileText } from "react-icons/tb";
-import { MdDeleteOutline } from "react-icons/md";
-import { Loader } from "./index"; 
 import { formatDate } from "../utils/formatDate.js";
-import { GrAnalytics } from "react-icons/gr";
+import Loader from "./Loader.jsx";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 
 function AdminViewForms() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const forms = useSelector((state) => state.form.forms);
-  const loadingStatus = useSelector((state) => state.form.loading);
+  const loading = useSelector((state) => state.form.loading);
+  const accountType = useSelector((state) => state.auth.accountType);
 
   const handleDelete = async (id) => {
     const res = await dispatch(deleteForm(id));
@@ -29,100 +27,86 @@ function AdminViewForms() {
   };
 
   useEffect(() => {
-    dispatch(getAllForms());
+    if (accountType === "admin") {
+      dispatch(getAllForms());
+    }
 
     return () => {
       dispatch(resetForm());
     };
-  }, [dispatch]);
+  }, [dispatch, accountType]);
 
-  if (forms.length === 0) {
-    return (
-      <div className="flex items-start justify-center w-screen mt-10 ">
-        <p className="text-3xl">No Forms Found</p>
-      </div>
-    );
+  if (accountType !== "admin") {
+    return null; // or you could redirect to a 404 page
   }
 
-  if (loadingStatus) {
+  if (loading) {
     return (
-      <div className="flex items-center justify-center absolute inset-0 ">
+      <div className="flex items-center justify-center h-[80vh]">
         <Loader h="32" />
       </div>
     );
   }
 
+  if (forms.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-2xl text-[#3e3e65] font-semibold">No Forms Found</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-screen p-3">
-      <div>
-        <div className="mt-1">
-          <table className="w-full text-center table-auto">
-            <thead>
-              <tr>
-                <th className="px-4 py-2 w-1/3">Title</th>
-                <th className="px-4 py-2 w-1/3">Created On</th>
-                <th className="px-4 py-2 w-1/3">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {forms.map((form) => (
-                <tr key={form._id} className="border-b hover:bg-slate-100">
-                  <td className="px-4 py-2 max-w-24 overflow-hidden text-ellipsis whitespace-nowrap w-1/3">
-                    {form.title}
-                  </td>
-                  <td className="px-4 py-2 w-1/3">
-                    {formatDate(form.createdAt)}
-                  </td>
-                  <td className="px-4 py-2 flex items-center justify-center gap-3 ">
-                    <div className="relative group">
-                      <Link to={`/form/${btoa(form._id)}`}>
-                        <button className="text-blue-500 px-4 py-2 rounded-md shadow-md hover:text-blue-600 text-lg">
-                          <TbFileText />
-                        </button>
-                      </Link>
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
-                        <div className="bg-black text-white text-xs rounded py-1 px-2 shadow-lg">
-                          View
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="relative group">
-                      <button
-                        className="text-red-500  px-4 py-2 rounded-md shadow-md hover:text-red-600 text-lg"
-                        onClick={() => handleDelete(form._id)}
-                      >
-                        <MdDeleteOutline />
-                      </button>
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block opacity-0 group-hover:opacity-100 transition duration-300 delay-200">
-                        <div className="bg-black text-white text-xs rounded py-1 px-2 shadow-lg">
-                          Delete
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="relative group">
-                      <button
-                        className="text-green-500 inline-block px-4 py-2 rounded-md shadow-md hover:text-green-600 text-lg"
-                        onClick={() => navigate(`/analytics/${btoa(form._id)}`)}
-                      >
-                        <GrAnalytics />
-                      </button>
-                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block opacity-0 group-hover:opacity-100 transition duration-300 delay-200">
-                        <div className="bg-black text-white text-xs rounded py-1 px-2 shadow-lg">
-                          Analytics
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold text-[#3e3e65] mb-6">All Forms</h1>
+      <div className="space-y-4">
+        {forms.map((form) => (
+          <div
+            key={form._id}
+            className="bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out"
+          >
+            <div className="flex items-center p-4">
+              <div className="flex-shrink-0 mr-4">
+                <FiFileText className="text-5xl text-[#214e82]" />
+              </div>
+              <div className="flex-grow">
+                <h2 className="text-xl font-semibold text-[#3e3e65] mb-1">
+                  {form.title}
+                </h2>
+                <p className="text-sm text-gray-600 mb-1">
+                  Created on: {formatDate(form.createdAt)}
+                </p>
+                <p className="text-sm text-gray-600 mb-2">
+                  Created by: {form.createdBy || "Unknown"}
+                </p>
+                <div className="flex items-center space-x-4">
+                  <Link
+                    to={`/form/${btoa(form._id)}`}
+                    className="inline-flex items-center text-[#2e61a8] hover:text-[#214e82] font-semibold transition duration-300 ease-in-out"
+                  >
+                    <FiEye className="mr-1" /> View Form
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(form._id)}
+                    className="inline-flex items-center text-red-500 hover:text-red-600 font-semibold transition duration-300 ease-in-out"
+                  >
+                    <FiTrash2 className="mr-1" /> Delete
+                  </button>
+                  <button
+                    onClick={() => navigate(`/analytics/${btoa(form._id)}`)}
+                    className="inline-flex items-center text-green-500 hover:text-green-600 font-semibold transition duration-300 ease-in-out"
+                  >
+                    <FiBarChart2 className="mr-1" /> Analytics
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
 export default AdminViewForms;
+
