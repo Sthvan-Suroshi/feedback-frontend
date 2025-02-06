@@ -11,6 +11,7 @@ import {
 } from "../store/Slices/feedbackSlice.js";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
+import leoProfanity from "leo-profanity"; // Import bad word detection package
 
 const FeedbackForm = () => {
   const { id } = useParams();
@@ -41,10 +42,25 @@ const FeedbackForm = () => {
   }, [formData, setValue]);
 
   const onSubmit = async (data) => {
-    const responses = formData.questions.map((question) => ({
-      questionID: question._id,
-      responseText: data[question._id]
-    }));
+    // Filter responses for bad words
+    const responses = formData.questions.map((question) => {
+      const cleanResponse = leoProfanity.clean(data[question._id] || "");
+      return {
+        questionID: question._id,
+        responseText: cleanResponse,
+      };
+    });
+
+    // Check if any response contains profane words
+    const hasProfanity = formData.questions.some(
+      (question) =>
+        data[question._id] !== leoProfanity.clean(data[question._id] || "")
+    );
+
+    if (hasProfanity) {
+      toast.error("Your feedback contains inappropriate language. Please revise.");
+      return;
+    }
 
     const res = await dispatch(addFeedback({ formId, responses }));
     if (res.type === "addFeedback/fulfilled") {
@@ -166,4 +182,3 @@ const FeedbackForm = () => {
 };
 
 export default FeedbackForm;
-

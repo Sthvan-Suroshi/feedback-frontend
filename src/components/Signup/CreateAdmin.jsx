@@ -70,16 +70,6 @@ const Button = ({ children, className = "", isLoading = false, ...props }) => {
 
 // Main Component
 const CreateAdmin = () => {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    college_id: "",
-    accountType: "admin",
-    department: "ALL"
-  });
-
-  const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [createdAdmins, setCreatedAdmins] = useState([]);
   const [submitStatus, setSubmitStatus] = useState({ type: "", message: "" });

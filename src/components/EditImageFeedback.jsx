@@ -5,6 +5,7 @@ import { ImCancelCircle } from "react-icons/im";
 import { editImageFeedback } from "../store/Slices/imageFeedbackSlice";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
+import filter from "leo-profanity";
 
 function EditImageFeedback({ post, setPopUp }) {
   const dispatch = useDispatch();
@@ -17,6 +18,14 @@ function EditImageFeedback({ post, setPopUp }) {
   });
 
   const editFeedback = async (data) => {
+    // Check for inappropriate language
+    const hasProfanity = filter.check(data.title) || filter.check(data.description);
+
+    if (hasProfanity) {
+      toast.error("Inappropriate language detected. Feedback not updated.");
+      return;
+    }
+
     data._id = post._id;
     const res = await dispatch(editImageFeedback(data));
 
