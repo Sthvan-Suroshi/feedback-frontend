@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { getCurrentUser, registerUser } from "../../store/Slices/authSlice";
+import {  registerUser } from "../../store/Slices/authSlice";
 import toast, { Toaster } from "react-hot-toast";
 
 const CreateAdmin = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [createdAdmins, setCreatedAdmins] = useState([]);
 

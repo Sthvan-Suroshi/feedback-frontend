@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import GetImagePreview from "./GetImagePreview";
 import { FaUpload, FaSpinner, FaCheckCircle } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import leoProfanity from "leo-profanity"; // Import the bad word detection package
 
 function ImageFeedback() {
   const { handleSubmit, register, control, reset, setValue } = useForm();
@@ -15,6 +16,15 @@ function ImageFeedback() {
   const dispatch = useDispatch();
 
   const addFeedback = async (data) => {
+    // Check for bad words in title and description
+    const cleanTitle = leoProfanity.clean(data.title);
+    const cleanDescription = leoProfanity.clean(data.description);
+
+    // If any profanity is found, show a warning and prevent submission
+    if (cleanTitle !== data.title || cleanDescription !== data.description) {
+      toast.error("Your feedback contains inappropriate language. Please revise.");
+      return;
+    }
 
     const res = await dispatch(addImageFeedback(data));
 
