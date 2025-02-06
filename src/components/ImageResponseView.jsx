@@ -8,7 +8,7 @@ import {
   getAllUserImageResponses,
   resetImageFeedback
 } from "../store/Slices/imageFeedbackSlice";
-import { EditImageFeedback, Loader } from "./index";
+import { EditImageFeedback } from "./index";
 
 const ImageResponseView = () => {
   const dispatch = useDispatch();
