@@ -1,35 +1,35 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FaRobot, FaShieldAlt, FaChartBar } from 'react-icons/fa';
-import { IoMdSpeedometer } from 'react-icons/io';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { FaRobot, FaShieldAlt, FaChartBar } from "react-icons/fa";
+import { IoMdSpeedometer } from "react-icons/io";
 
 function Home() {
   const [activeFeature, setActiveFeature] = useState(null);
-  console.log(activeFeature)
+  console.log(activeFeature);
   const features = [
     {
       icon: FaRobot,
-      title: 'AI-Powered',
-      description: 'Leverage advanced AI for insightful analysis',
-      color: 'text-[#214e82]'
+      title: "AI-Powered",
+      description: "Leverage advanced AI for insightful analysis",
+      color: "text-[#214e82]"
     },
     {
       icon: FaShieldAlt,
-      title: 'Incognito',
-      description: 'Provide feedback anonymously and securely.',
-      color: 'text-[#3e3e65]'
+      title: "Incognito",
+      description: "Provide feedback anonymously and securely.",
+      color: "text-[#3e3e65]"
     },
     {
       icon: FaChartBar,
-      title: 'Deep Analytics',
-      description: 'Gain comprehensive insights from your feedback',
-      color: 'text-[#214e82]'
+      title: "Deep Analytics",
+      description: "Gain comprehensive insights from your feedback",
+      color: "text-[#214e82]"
     },
     {
       icon: IoMdSpeedometer,
-      title: 'Rapid Results',
-      description: 'Get quick, actionable insights from your data',
-      color: 'text-[#3e3e65]'
+      title: "Rapid Results",
+      description: "Get quick, actionable insights from your data",
+      color: "text-[#3e3e65]"
     }
   ];
 
@@ -59,7 +59,7 @@ function Home() {
       <main className="container mx-auto px-4 md:px-6 py-4 md:py-16">
         <section className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-5xl font-extrabold mb-4 md:mb-6 text-[#214e82]">
-            Revolutionize Feedback Collection
+            Streamline Feedback Collection
           </h2>
           <p className="text-base md:text-xl text-gray-600 max-w-3xl mx-auto mb-8 md:mb-12">
             Harness cutting-edge AI and privacy technologies to transform how
@@ -113,4 +113,3 @@ function Home() {
 }
 
 export default Home;
-

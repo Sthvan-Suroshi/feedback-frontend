@@ -1,32 +1,164 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { getCurrentUser, registerUser } from "../../store/Slices/authSlice";
-import toast, { Toaster } from "react-hot-toast";
 
+// Custom Input Component
+const Input = ({ label, error, className = "", ...props }) => {
+  const [isFocused, setIsFocused] = useState(false);
+
+  return (
+    <div className="relative">
+      <input
+        {...props}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        className={`
+          w-full px-4 py-2 
+          text-gray-700 bg-white 
+          border-2 rounded-md 
+          transition-all duration-200
+          ${error ? "border-red-500" : isFocused ? "border-blue-500" : "border-gray-300"}
+          ${props.readOnly ? "bg-gray-50 cursor-not-allowed" : "hover:border-gray-400"}
+          focus:outline-none
+          ${className}
+        `}
+      />
+      {label && (
+        <label
+          className={`
+            absolute left-3 px-1
+            transition-all duration-200
+            pointer-events-none
+            ${isFocused || props.value ? "-top-2 text-sm bg-white" : "top-2 text-gray-500"}
+            ${isFocused ? "text-blue-500" : error ? "text-red-500" : "text-gray-500"}
+          `}
+        >
+          {label}
+        </label>
+      )}
+      {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
+    </div>
+  );
+};
+
+// Custom Button Component
+const Button = ({ children, className = "", isLoading = false, ...props }) => {
+  return (
+    <button
+      {...props}
+      className={`
+        px-4 py-2 
+        text-white 
+        bg-blue-600 
+        rounded-md
+        transition-all duration-200
+        ${!props.disabled && "hover:bg-blue-700 active:bg-blue-800"}
+        ${props.disabled && "opacity-50 cursor-not-allowed"}
+        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
+        ${className}
+      `}
+    >
+      {isLoading ? (
+        <div className="flex items-center justify-center">
+          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+          Loading...
+        </div>
+      ) : (
+        children
+      )}
+    </button>
+  );
+};
+
+// Main Component
 const CreateAdmin = () => {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    college_id: "",
+    accountType: "admin",
+    department: "ALL"
+  });
+
+  const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [createdAdmins, setCreatedAdmins] = useState([]);
+  const [submitStatus, setSubmitStatus] = useState({ type: "", message: "" });
 
-  const submit = async (details) => {
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = "Full name is required";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email";
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    } else if (formData.password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters";
+    }
+
+    if (!formData.college_id.trim()) {
+      newErrors.college_id = "Admin ID is required";
+    } else if (!/^JCER\d+$/.test(formData.college_id)) {
+      newErrors.college_id =
+        "Admin ID must start with JCER followed by numbers";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: ""
+      }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
     setIsSubmitting(true);
+    setSubmitStatus({ type: "", message: "" });
+
     try {
-      const res = await dispatch(registerUser(details));
-      if (res.payload && res.payload.success) {
-        toast.success("Admin registered successfully");
-        setCreatedAdmins([...createdAdmins, details]);
-        reset();
-      } else {
-        toast.error(res.payload?.message || "Registration failed. Please try again.");
-      }
+      // Simulating API call - replace with actual API integration
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      setCreatedAdmins((prev) => [...prev, formData]);
+      setFormData({
+        fullName: "",
+        email: "",
+        password: "",
+        college_id: "",
+        accountType: "admin",
+        department: "ALL"
+      });
+      setSubmitStatus({
+        type: "success",
+        message: "Admin created successfully!"
+      });
     } catch (error) {
-      console.error("Registration error:", error);
-      toast.error("An error occurred. Please try again.");
+      setSubmitStatus({
+        type: "error",
+        message: error.message || "Failed to create admin. Please try again."
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -36,115 +168,89 @@ const CreateAdmin = () => {
     { name: "fullName", label: "Full Name", type: "text" },
     { name: "email", label: "Email", type: "email" },
     { name: "password", label: "Password", type: "password" },
-    { name: "college_id", label: "Admin ID", type: "text", placeholder: "JCER***" },
-    { name: "accountType", label: "Account Type", type: "text", defaultValue: "admin", readOnly: true },
-    { name: "department", label: "Department", type: "text", defaultValue: "ALL", readOnly: true },
+    {
+      name: "college_id",
+      label: "Admin ID",
+      type: "text",
+      placeholder: ""
+    },
+    {
+      name: "accountType",
+      label: "Account Type",
+      type: "text",
+      readOnly: true
+    },
+    { name: "department", label: "Department", type: "text", readOnly: true }
   ];
 
   return (
-    <motion.div 
-      initial={{ opacity: 0 }} 
-      animate={{ opacity: 1 }} 
-      transition={{ duration: 0.5 }}
-      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#3e3e65] to-[#214e82] p-4"
-    >
-      <motion.div 
-        initial={{ y: -50 }} 
-        animate={{ y: 0 }} 
-        transition={{ type: "spring", stiffness: 100 }}
-        className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md"
-      >
-        <h2 className="text-3xl font-bold text-center mb-6 text-[#3e3e65]">Create Admin</h2>
-        <form onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit(submit)();
-        }} className="space-y-4">
+    <div className=" flex items-center justify-center  p-4">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-xl p-8">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+          Create Admin
+        </h2>
+
+        {submitStatus.message && (
+          <div
+            className={`
+            mb-6 p-4 rounded-md
+            ${
+              submitStatus.type === "error"
+                ? "bg-red-50 text-red-700 border border-red-200"
+                : "bg-green-50 text-green-700 border border-green-200"
+            }
+          `}
+          >
+            {submitStatus.message}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-6">
           {inputFields.map((field) => (
-            <motion.div 
+            <Input
               key={field.name}
-              whileHover={{ scale: 1.02 }}
-              className="relative"
-            >
-              <input
-                id={field.name}
-                type={field.type}
-                placeholder={field.placeholder || " "}
-                defaultValue={field.defaultValue}
-                readOnly={field.readOnly}
-                className={`block w-full px-4 py-2 text-[#3e3e65] bg-gray-100 border-2 rounded-md focus:outline-none focus:border-[#2e61a8] transition duration-200 ${
-                  errors[field.name] ? 'border-red-500' : 'border-gray-300'
-                } ${field.readOnly ? 'cursor-not-allowed' : ''}`}
-                {...register(field.name, { required: true })}
-              />
-              <label
-                htmlFor={field.name}
-                className={`absolute left-4 transition-all duration-200 pointer-events-none ${
-                  errors[field.name] ? 'text-red-500' : 'text-gray-500'
-                }`}
-                style={{
-                  top: errors[field.name] || document.activeElement === document.getElementById(field.name) || document.getElementById(field.name).value ? '-0.75rem' : '0.75rem',
-                  fontSize: errors[field.name] || document.activeElement === document.getElementById(field.name) || document.getElementById(field.name).value ? '0.75rem' : '1rem',
-                  backgroundColor: errors[field.name] || document.activeElement === document.getElementById(field.name) || document.getElementById(field.name).value ? 'white' : 'transparent',
-                  padding: errors[field.name] || document.activeElement === document.getElementById(field.name) || document.getElementById(field.name).value ? '0 0.25rem' : '0',
-                }}
-              >
-                {field.label}
-              </label>
-              <AnimatePresence>
-                {errors[field.name] && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="text-red-500 text-xs mt-1"
-                  >
-                    This field is required
-                  </motion.p>
-                )}
-              </AnimatePresence>
-            </motion.div>
+              name={field.name}
+              type={field.type}
+              label={field.label}
+              placeholder={field.placeholder}
+              value={formData[field.name]}
+              onChange={handleChange}
+              error={errors[field.name]}
+              readOnly={field.readOnly}
+            />
           ))}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+
+          <Button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-2 px-4 bg-[#2e61a8] text-white rounded-md hover:bg-[#214e82] transition duration-300 focus:outline-none focus:ring-2 focus:ring-[#3e3e65] focus:ring-opacity-50 ${
-              isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
+            isLoading={isSubmitting}
+            className="w-full"
           >
-            {isSubmitting ? 'Creating Admin...' : 'Create Admin'}
-          </motion.button>
+            Create Admin
+          </Button>
         </form>
 
         {createdAdmins.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mt-8"
-          >
-            <h3 className="text-xl font-semibold mb-4 text-[#3e3e65]">Created Admins</h3>
-            <ul className="space-y-2">
+          <div className="mt-8">
+            <h3 className="text-xl font-semibold mb-4 text-gray-800">
+              Created Admins
+            </h3>
+            <div className="space-y-3">
               {createdAdmins.map((admin, index) => (
-                <motion.li
+                <div
                   key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-gray-100 p-2 rounded-md"
+                  className="p-4 bg-gray-50 rounded-md border border-gray-200"
                 >
-                  {admin.fullName} - {admin.email}
-                </motion.li>
+                  <p className="font-medium text-gray-800">{admin.fullName}</p>
+                  <p className="text-sm text-gray-600">{admin.email}</p>
+                </div>
               ))}
-            </ul>
-          </motion.div>
+            </div>
+          </div>
         )}
-      </motion.div>
-      <Toaster position="top-right" />
-    </motion.div>
+      </div>
+    </div>
   );
 };
 
 export default CreateAdmin;
-

@@ -12,6 +12,7 @@ const FormBuilder = ({ title, description }) => {
   const dispatch = useDispatch();
   const [questions, setQuestions] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
+  const [loader, setLoader] = useState(false);
 
   const { control, handleSubmit, reset, setValue, watch } = useForm({
     defaultValues: {
@@ -114,10 +115,12 @@ const FormBuilder = ({ title, description }) => {
 
   const handleAIGenerate = async () => {
     try {
+      setLoader(true);
       const questionString = await GenerateQuestions();
       const cleanedJSON = questionString.replace(/```json|```/g, "").trim();
       const parsedQuestions = JSON.parse(cleanedJSON);
       setQuestions((prevQuestions) => [...prevQuestions, ...parsedQuestions]);
+      setLoader(false);
     } catch (error) {
       console.log(error);
     }
@@ -218,7 +221,7 @@ const FormBuilder = ({ title, description }) => {
         <span className="font-bold opacity-0 group-hover:opacity-100 absolute transform -translate-y-8 bg-gray-800 text-white px-3 py-1 rounded text-sm transition-all duration-200">
           Generate with AI
         </span>
-        <span className="font-bold">AI</span>
+        <span className="font-bold">{loader ? "Generating..." : "AI"}</span>
         <LuSparkle className="text-xl" />
       </button>
     </div>

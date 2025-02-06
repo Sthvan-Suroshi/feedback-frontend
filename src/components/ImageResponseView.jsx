@@ -58,15 +58,15 @@ const ImageResponseView = () => {
 
   if (loadingStatus) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <Loader h="32" />
+      <div className="flex items-center justify-center h-screen font-bold">
+        <h1>Loading...</h1>
       </div>
     );
   }
 
   if (feedbacks.length === 0) {
     return (
-      <motion.div 
+      <motion.div
         className="flex items-center justify-center h-screen"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -103,6 +103,7 @@ const ImageResponseView = () => {
               >
                 <div className="relative h-48 overflow-hidden">
                   <img
+                    loading="lazy"
                     className="w-full h-full object-cover object-center"
                     src={feedback.imageUrl}
                     alt={feedback.title}
@@ -144,4 +145,3 @@ const ImageResponseView = () => {
 };
 
 export default ImageResponseView;
-

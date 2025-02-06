@@ -1,11 +1,10 @@
-
 function Loader({ h = "5" }) {
   return (
     <div className="">
       <svg
         aria-hidden="true"
         role="status"
-        className={`mr-2 inline-block h-${h} w-${h} animate-spin text-slate-200`}
+        className={`mr-2 inline-block size-${h} animate-spin text-slate-200`}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
