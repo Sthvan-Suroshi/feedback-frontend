@@ -39,7 +39,7 @@ function Home() {
         <div className="flex items-center space-x-3">
           <FaRobot className="text-[#214e82]" size={36} />
           <h1 className="text-2xl md:text-3xl font-bold text-[#214e82]">
-            IntelliForm
+            FeedBacks
           </h1>
         </div>
         <nav className="hidden md:flex space-x-4">

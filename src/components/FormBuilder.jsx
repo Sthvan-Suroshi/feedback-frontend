@@ -216,12 +216,12 @@ const FormBuilder = ({ title, description }) => {
       {/* AI Generate Button */}
       <button
         onClick={handleAIGenerate}
-        className="fixed bottom-8 right-8 size-16 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-1 group"
+        className={`fixed bottom-8 right-8 ${loader ? "size-28" : "size-16"} bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-1 group`}
       >
         <span className="font-bold opacity-0 group-hover:opacity-100 absolute transform -translate-y-8 bg-gray-800 text-white px-3 py-1 rounded text-sm transition-all duration-200">
           Generate with AI
         </span>
-        <span className="font-bold">{loader ? "Generating..." : "AI"}</span>
+        <span className="font-bold">{loader ? "wait" : "AI"}</span>
         <LuSparkle className="text-xl" />
       </button>
     </div>

@@ -136,10 +136,8 @@ const formSlice = createSlice({
       });
 
     builder.addCase(togglePublish.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.loading = false;
       state.isPublished = action.payload;
-      console.log(state.isPublished);
     });
 
     builder

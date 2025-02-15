@@ -70,6 +70,16 @@ const Button = ({ children, className = "", isLoading = false, ...props }) => {
 
 // Main Component
 const CreateAdmin = () => {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    college_id: "",
+    accountType: "admin",
+    department: "ALL"
+  });
+
+  const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [createdAdmins, setCreatedAdmins] = useState([]);
   const [submitStatus, setSubmitStatus] = useState({ type: "", message: "" });
@@ -162,7 +172,7 @@ const CreateAdmin = () => {
       name: "college_id",
       label: "Admin ID",
       type: "text",
-      placeholder: ""
+      placeholder: "JCER***"
     },
     {
       name: "accountType",
@@ -174,7 +184,7 @@ const CreateAdmin = () => {
   ];
 
   return (
-    <div className=" flex items-center justify-center  p-4">
+    <div className="min-h-screen flex items-center justify-center  p-4">
       <div className="w-full max-w-md bg-white rounded-lg shadow-xl p-8">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Create Admin
